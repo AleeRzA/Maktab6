@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
 
-                return new TaskListFragment();
+                return TaskListFragment.newInstance();
             }
 
             @Override

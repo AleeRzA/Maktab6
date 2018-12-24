@@ -100,7 +100,7 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 0;
+            return 1;
         }
 
 //        @Override
