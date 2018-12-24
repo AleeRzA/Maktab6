@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 
 import com.example.android.maktab6.R;
 
-import java.util.UUID;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -23,10 +21,10 @@ public class TaskListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance(UUID taskId) {
+    public static TaskListFragment newInstance() {
 
         Bundle args = new Bundle();
-        args.putSerializable(ARGS_TAK_ID, taskId);
+//        args.putSerializable(ARGS_TAK_ID, taskId);
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
