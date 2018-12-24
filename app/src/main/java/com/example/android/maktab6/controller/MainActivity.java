@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                return TaskListFragment.newInstance();
+
+                return new TaskListFragment();
             }
 
             @Override

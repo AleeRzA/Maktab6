@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +47,9 @@ public class TaskListFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        TaskRepo taskRepo = TaskRepo.getInstance();
-        List<Task> tasks = taskRepo.getTasks();
-        TaskAdapter adapter = new TaskAdapter(tasks);
+//        TaskRepo taskRepo = TaskRepo.getInstance();
+//        List<Task> tasks = taskRepo.getTasks();
+        TaskAdapter adapter = new TaskAdapter();
         mRecyclerView.setAdapter(adapter);
         return view;
     }
@@ -72,6 +71,9 @@ public class TaskListFragment extends Fragment {
     private class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private List<Task> mTasks = new ArrayList<>();
 
+        public TaskAdapter(){
+
+        }
         public TaskAdapter(List<Task> tasks){
             mTasks = tasks;
         }
@@ -93,7 +95,7 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
+            ((EmptyHolder)holder).bind();
         }
 
         @Override
@@ -101,12 +103,12 @@ public class TaskListFragment extends Fragment {
             return 0;
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            if(mTasks == null)
-                return 0;
-            return 1;
-            }
+//        @Override
+//        public int getItemViewType(int position) {
+//            if(mTasks == null)
+//                return 0;
+//            return 1;
+//            }
         }
     }
 
