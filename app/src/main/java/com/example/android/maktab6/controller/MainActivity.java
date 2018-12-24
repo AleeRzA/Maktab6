@@ -1,5 +1,6 @@
 package com.example.android.maktab6.controller;
 
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager = findViewById(R.id.main_view_pager);
         mTabLayout = findViewById(R.id.main_tabLayout);
+        mTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mActionButton = findViewById(R.id.main_floating_btn);
 
         mTabLayout.setupWithViewPager(mViewPager);
@@ -36,6 +38,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public int getCount() {
                 return 3;
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                String title = "";
+                switch (position){
+                    case 0:
+                        title = "ALL";
+                        break;
+                    case 1:
+                        title = "DONE";
+                        break;
+                    case 2:
+                        title = "UNDONE";
+                        break;
+                }
+                return title;
             }
         });
         mActionButton.setOnClickListener(new View.OnClickListener() {
