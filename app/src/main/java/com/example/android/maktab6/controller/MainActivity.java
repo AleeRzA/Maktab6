@@ -1,5 +1,7 @@
 package com.example.android.maktab6.controller;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -7,9 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 
@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "hi", Toast.LENGTH_SHORT).show();
+                Intent intent = TaskCreationActivity.newIntent(MainActivity.this);
+                startActivity(intent);
             }
         });
 

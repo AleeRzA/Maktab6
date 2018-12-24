@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".controller.TaskCreationActivity"></activity>
+        <activity
+            android:name=".controller.TaskCreationActivity"
+            android:label="@string/hello_blank_fragment"
+            ></activity>
     </application>
 
 </manifest>
