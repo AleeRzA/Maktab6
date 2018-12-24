@@ -24,5 +24,6 @@ android:id="@+id/main_floating_btn"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:layout_gravity="end|bottom"
+    android:src="@drawable/icon_plus_new"
 android:layout_margin="16dp"/>
 </android.support.design.widget.CoordinatorLayout>
