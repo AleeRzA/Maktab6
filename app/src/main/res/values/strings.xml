@@ -5,4 +5,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_task_comment">You Don\'t Have Any Task.</string>
     <string name="label_create">New Task</string>
+
+    <string name="creation_title">Please Enter Task Title</string>
+    <string name="creation_description">Write your description</string>
+    <string name="creation_date">Select date and time</string>
+    <string name="creation_btn_text">CREATE</string>
 </resources>
