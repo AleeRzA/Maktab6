@@ -18,4 +18,7 @@ public class TaskRepo {
          mTasks.add(task);
          return mTasks;
     }
+    public List<Task> getTasks(){
+        return mTasks;
+    }
 }
