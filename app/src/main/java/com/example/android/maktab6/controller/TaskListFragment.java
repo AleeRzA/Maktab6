@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -55,6 +56,9 @@ public class TaskListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
+        mRecyclerView
+                .addItemDecoration(
+                        new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         updateUI();
@@ -167,8 +171,8 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if(mTasks.size() > 0)
-                return 1;
+//            if(mTasks.get(position) != null)
+//                return 1;
             return 0;
             }
         }
