@@ -3,6 +3,7 @@ package com.example.android.maktab6.controller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +29,8 @@ public class TaskListFragment extends Fragment {
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
     private RecyclerView mRecyclerView;
-//    private List<Task> mTaskList;
+    private List<Task> mTaskLists;
+    private TaskAdapter mTaskAdapter;
     public TaskListFragment() {
         // Required empty public constructor
     }
@@ -39,6 +41,12 @@ public class TaskListFragment extends Fragment {
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTaskLists = TaskRepo.getInstance().getTasks();
     }
 
     @Override
@@ -61,9 +69,12 @@ public class TaskListFragment extends Fragment {
 
     private void updateUI() {
         TaskRepo taskRepo = TaskRepo.getInstance();
-        List<Task> tasks = taskRepo.getTasks();
-        TaskAdapter adapter = new TaskAdapter(tasks);
-        mRecyclerView.setAdapter(adapter);
+        mTaskLists = taskRepo.getTasks();
+        if(mTaskLists.size() > 0)
+        mTaskAdapter  = new TaskAdapter(mTaskLists);
+        else
+            mTaskAdapter = new TaskAdapter();
+        mRecyclerView.setAdapter(mTaskAdapter);
     }
 
     private class EmptyHolder extends RecyclerView.ViewHolder{
@@ -96,7 +107,7 @@ public class TaskListFragment extends Fragment {
             String title = task.getTitle();
             mTextTitle.setText(title);
             char firstChar = title.charAt(0);
-            mChar.setText(firstChar);
+            mChar.setText(String.valueOf(firstChar));
         }
         @Override
         public void onClick(View view) {
@@ -137,12 +148,13 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            Task task = mTasks.get(position);
+
             switch (holder.getItemViewType()){
                 case 0:
                     ((EmptyHolder)holder).bind();
                     break;
                 case 1:
+                    Task task = mTasks.get(position);
                     ((SampleHolder)holder).bindSample(task);
                     break;
             }
@@ -150,14 +162,14 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 1;
+            return mTasks.size();
         }
 
         @Override
         public int getItemViewType(int position) {
-            if(mTasks.size() == 0)
-                return 0;
-            return 1;
+            if(mTasks.size() > 0)
+                return 1;
+            return 0;
             }
         }
     }

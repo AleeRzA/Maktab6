@@ -1,5 +1,6 @@
 package com.example.android.maktab6.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
+    public static Intent newIntent(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        return intent;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -28,6 +28,7 @@ public class TaskCreationFragment extends Fragment  {
     private EditText mDescription;
     private Button mCreateBtn;
     private List<Task> mTaskList;
+
     private Task newTask;
     public TaskCreationFragment() {
         // Required empty public constructor
@@ -85,7 +86,10 @@ public class TaskCreationFragment extends Fragment  {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTaskList.add(newTask);
+                TaskRepo.getInstance().addToList(newTask);
+//                Intent intent = new Intent(getActivity(), MainActivity.class);
+//                startActivity(intent);
+
                 Toast.makeText(getActivity(), R.string.task_saved_message, Toast.LENGTH_SHORT).show();
                 ((TaskCreationActivity)getActivity()).onBackPressed();
             }
