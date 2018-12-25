@@ -18,8 +18,8 @@
         </activity>
         <activity
             android:name=".controller.TaskCreationActivity"
-            android:label="@string/label_create"
-            ></activity>
+            android:label="@string/label_create" />
+        <activity android:name=".controller.EditTaskActivity"></activity>
     </application>
 
 </manifest>

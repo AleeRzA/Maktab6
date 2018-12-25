@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                if(position != 0)
-                    return EmptyTaskFragment.newInstance();
+//                if(position != 0)
+//                    return EmptyTaskFragment.newInstance();
                 if (mTasks.size() != 0){
                         return TaskListFragment.newInstance();
                 }else return EmptyTaskFragment.newInstance();
