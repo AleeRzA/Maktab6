@@ -1,7 +1,5 @@
 package com.example.android.maktab6.model;
 
-import android.content.Context;
-
 import java.util.Date;
 import java.util.UUID;
 
@@ -15,7 +13,7 @@ public class Task {
     private Date mDate;
     private UUID mId;
 
-    public Task(Context context){
+    public Task( ){
         mId = UUID.randomUUID();
     }
 
