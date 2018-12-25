@@ -142,9 +142,9 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-                return 1;
-            }
+            return super.getItemViewType(position);
         }
+    }
     }
 
 
