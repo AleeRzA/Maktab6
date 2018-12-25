@@ -7,18 +7,22 @@
     android:layout_height="wrap_content"
     android:id="@+id/layout_sample_task">
 
-    <ImageView
+    <TextView
         android:id="@+id/sampleTask_imageView"
         android:layout_width="60dp"
         android:layout_height="60dp"
+        android:textColor="#ffff"
+        android:textSize="20dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:src="@drawable/circle_shape"
+        android:background="@drawable/circle_shape"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="A" />
 
     <TextView
         android:id="@+id/sampleTask_textView"
