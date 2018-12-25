@@ -87,11 +87,10 @@ public class TaskCreationFragment extends Fragment  {
             @Override
             public void onClick(View view) {
                 TaskRepo.getInstance().addToList(newTask);
-//                Intent intent = new Intent(getActivity(), MainActivity.class);
+//                Intent intent = MainActivity.newIntent(getActivity());
 //                startActivity(intent);
-
+                getActivity().onBackPressed();
                 Toast.makeText(getActivity(), R.string.task_saved_message, Toast.LENGTH_SHORT).show();
-                ((TaskCreationActivity)getActivity()).onBackPressed();
             }
         });
         return view;
