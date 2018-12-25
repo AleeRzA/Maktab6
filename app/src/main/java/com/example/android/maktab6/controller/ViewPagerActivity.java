@@ -18,14 +18,14 @@ import com.example.android.maktab6.model.TaskRepo;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewPagerActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
     private List<Task> mTasks;
     public static Intent newIntent(Context context){
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, ViewPagerActivity.class);
         return intent;
     }
     @Override
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = TaskCreationActivity.newIntent(MainActivity.this);
+                Intent intent = TaskCreationActivity.newIntent(ViewPagerActivity.this);
                 startActivity(intent);
             }
         });

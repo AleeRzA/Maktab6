@@ -19,6 +19,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_edit"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:singleLine="true"
             android:drawablePadding="16dp"
             />
         <TextView
@@ -30,6 +33,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_trash"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:singleLine="true"
             android:drawablePadding="16dp"
             />
         <TextView
@@ -41,6 +47,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/icon_checkmark"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:singleLine="true"
             android:drawablePadding="16dp"
             />
     </LinearLayout>

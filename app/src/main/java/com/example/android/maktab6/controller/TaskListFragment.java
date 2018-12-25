@@ -1,6 +1,7 @@
 package com.example.android.maktab6.controller;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
@@ -28,6 +28,7 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
+    public static final int REQ_INT = 111;
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
@@ -99,7 +100,9 @@ public class TaskListFragment extends Fragment {
         }
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(), mTask.getTitle(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), mTask.getTitle(), Toast.LENGTH_SHORT).show();
+            Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
+            startActivityForResult(intent, REQ_INT);
         }
     }
     //--------------------------------------------------/
