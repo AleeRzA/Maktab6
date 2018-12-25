@@ -171,8 +171,8 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-//            if(mTasks.get(position) != null)
-//                return 1;
+            if(mTasks.get(position) != null)
+                return 1;
             return 0;
             }
         }
