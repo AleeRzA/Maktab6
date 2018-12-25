@@ -12,9 +12,20 @@ public class Task {
     private String mDescription;
     private Date mDate;
     private UUID mId;
+    private boolean mDone;
+
+
 
     public Task( ){
         mId = UUID.randomUUID();
+    }
+
+    public boolean isDone() {
+        return mDone;
+    }
+
+    public void setDone(boolean done) {
+        mDone = done;
     }
 
     public String getTitle() {
