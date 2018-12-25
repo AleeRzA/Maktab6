@@ -32,6 +32,7 @@ public class TaskListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
+    private int _postition;
     public TaskListFragment() {
         // Required empty public constructor
     }
@@ -74,8 +75,12 @@ public class TaskListFragment extends Fragment {
     private void updateUI() {
         TaskRepo taskRepo = TaskRepo.getInstance();
         mTaskLists = taskRepo.getTasks();
-        mTaskAdapter  = new TaskAdapter(mTaskLists);
-        mRecyclerView.setAdapter(mTaskAdapter);
+        if(mTaskAdapter == null) {
+            mTaskAdapter = new TaskAdapter(mTaskLists);
+            mRecyclerView.setAdapter(mTaskAdapter);
+        } else {
+            mTaskAdapter.notifyItemChanged(_postition);
+        }
     }
 
 
@@ -90,6 +95,7 @@ public class TaskListFragment extends Fragment {
             mTextTitle = itemView.findViewById(R.id.sampleTask_textView);
             mChar = itemView.findViewById(R.id.sampleTask_imageView);
             itemView.setOnClickListener(this);
+            _postition = getAdapterPosition();
         }
         public void bindSample(Task task){
             mTask = task;

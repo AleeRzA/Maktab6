@@ -26,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="8dp"
             android:text="Description:" />
 
         <EditText
@@ -34,13 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_margin="8dp"
             android:padding="8dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="8dp"
             android:text="Date:" />
 
         <EditText
@@ -48,14 +45,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_margin="8dp"
             android:padding="8dp"
             android:hint="2019-10-23"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="8dp"
             android:text="Time:" />
 
         <EditText
@@ -63,7 +58,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:layout_margin="8dp"
             android:padding="8dp"
             android:hint="12:45 pm" />
     </LinearLayout>
