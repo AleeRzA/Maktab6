@@ -13,12 +13,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.Task;
+import com.example.android.maktab6.model.TaskRepo;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
+    private List<Task> mTasks;
     public static Intent newIntent(Context context){
         Intent intent = new Intent(context, MainActivity.class);
         return intent;
@@ -32,13 +37,16 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout = findViewById(R.id.main_tabLayout);
         mTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         mActionButton = findViewById(R.id.main_floating_btn);
-
+        mTasks = TaskRepo.getInstance().getTasks();
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-
-                return TaskListFragment.newInstance();
+                if(position != 0)
+                    return EmptyTaskFragment.newInstance();
+                if (mTasks.size() != 0){
+                        return TaskListFragment.newInstance();
+                }else return EmptyTaskFragment.newInstance();
             }
 
             @Override
@@ -63,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return title;
             }
+
         });
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
