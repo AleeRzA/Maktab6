@@ -1,57 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".controller.EditTaskFragment">
 
-
     <LinearLayout
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-            android:text="Edit"
-            android:textSize="15sp"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_edit"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:singleLine="true"
-            android:drawablePadding="16dp"
-            />
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:text="Description:" />
+
+        <EditText
+            android:id="@+id/editFrag_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_margin="8dp"
+            android:padding="8dp"/>
         <TextView
-            android:text="Delete"
-            android:textSize="15sp"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_trash"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:singleLine="true"
-            android:drawablePadding="16dp"
-            />
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:text="Date:" />
+
+        <EditText
+            android:id="@+id/editFrag_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:hint="2019-10-23"/>
         <TextView
-            android:text="Done"
-            android:textSize="15sp"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/icon_checkmark"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
-            android:singleLine="true"
-            android:drawablePadding="16dp"
-            />
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:text="Time:" />
+
+        <EditText
+            android:id="@+id/editFrag_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:hint="12:45 pm" />
     </LinearLayout>
 
-</FrameLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_edit"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Edit"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_trash"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Delete"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_checkmark"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Done"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
