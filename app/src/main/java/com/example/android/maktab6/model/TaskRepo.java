@@ -2,6 +2,7 @@ package com.example.android.maktab6.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TaskRepo {
     private static TaskRepo instance;
@@ -20,5 +21,13 @@ public class TaskRepo {
     }
     public List<Task> getTasks(){
         return mTasks;
+    }
+    public Task getTaskById(UUID id){
+        for(Task task:mTasks){
+            if(task.getId().equals(id)){
+                return task;
+            }
+        }
+        return null;
     }
 }
