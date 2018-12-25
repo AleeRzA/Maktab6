@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,26 +73,11 @@ public class TaskListFragment extends Fragment {
     private void updateUI() {
         TaskRepo taskRepo = TaskRepo.getInstance();
         mTaskLists = taskRepo.getTasks();
-        if(mTaskLists.size() > 0)
         mTaskAdapter  = new TaskAdapter(mTaskLists);
-        else
-            mTaskAdapter = new TaskAdapter();
         mRecyclerView.setAdapter(mTaskAdapter);
     }
 
-    private class EmptyHolder extends RecyclerView.ViewHolder{
-        private ImageView mImageView;
-        private TextView mTextView;
-        public EmptyHolder(View itemView) {
-            super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView_sample_empty);
-            mTextView = itemView.findViewById(R.id.textView_sample_empty);
-        }
-        public void bind(){
-            mImageView.setVisibility(View.VISIBLE);
-            mTextView.setVisibility(View.VISIBLE);
-        }
-    }
+
     //--------------------------------------------------/
     private class SampleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextTitle;
@@ -139,29 +123,16 @@ public class TaskListFragment extends Fragment {
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(getActivity());
-            if(viewType == 0) {
-                View view = inflater.inflate(R.layout.sample_fragment_task_empty, parent, false);
-                EmptyHolder emptyHolder = new EmptyHolder(view);
-                return emptyHolder;
-            } else {
                 View view = inflater.inflate(R.layout.sample_fragment_task, parent, false);
                 SampleHolder sampleHolder = new SampleHolder(view);
                 return sampleHolder;
-            }
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-            switch (holder.getItemViewType()){
-                case 0:
-                    ((EmptyHolder)holder).bind();
-                    break;
-                case 1:
                     Task task = mTasks.get(position);
                     ((SampleHolder)holder).bindSample(task);
-                    break;
-            }
         }
 
         @Override
@@ -171,9 +142,7 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            if(mTasks.get(position) != null)
                 return 1;
-            return 0;
             }
         }
     }
