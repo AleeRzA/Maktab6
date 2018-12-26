@@ -89,6 +89,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/editFrag_deleteBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"

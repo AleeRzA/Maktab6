@@ -9,7 +9,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -74,11 +73,9 @@ public class ViewPagerActivity extends AppCompatActivity {
                 return title;
             }
 
-        });
-        mViewPager.addOnAdapterChangeListener(new ViewPager.OnAdapterChangeListener() {
             @Override
-            public void onAdapterChanged(@NonNull ViewPager viewPager, @Nullable PagerAdapter oldAdapter, @Nullable PagerAdapter newAdapter) {
-                mViewPager.setAdapter(newAdapter);
+            public int getItemPosition(@NonNull Object object) {
+                return POSITION_NONE;
             }
         });
 
@@ -90,5 +87,17 @@ public class ViewPagerActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        mViewPager.addOnAdapterChangeListener(new ViewPager.OnAdapterChangeListener() {
+//            @Override
+//            public void onAdapterChanged(@NonNull ViewPager viewPager, @Nullable PagerAdapter oldAdapter, @Nullable PagerAdapter newAdapter) {
+//                mViewPager.setAdapter(newAdapter);
+//            }
+//        });
+//    }
 }

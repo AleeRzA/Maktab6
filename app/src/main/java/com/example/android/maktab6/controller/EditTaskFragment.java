@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
@@ -24,8 +26,8 @@ public class EditTaskFragment extends Fragment {
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
     private Task mTask;
-    private EditText mEdit;
-    private EditText mDelete;
+    private EditText mEditText;
+    private TextView mDeleteBtn;
     private EditText mDone;
     public EditTaskFragment() {
         // Required empty public constructor
@@ -53,10 +55,20 @@ public class EditTaskFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
-        mEdit = view.findViewById(R.id.editFrag_desc);
+        mEditText = view.findViewById(R.id.editFrag_desc);
+        mDeleteBtn = view.findViewById(R.id.editFrag_deleteBtn);
 
-        mEdit.setText(mTask.getDescription());
+
+        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
+            }
+        });
+        mEditText.setText(mTask.getDescription());
         return view;
     }
 
+
 }
+
