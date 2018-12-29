@@ -32,6 +32,7 @@ public class TaskListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
+    private TextView mEmptyText;
     private int _postition;
 
     public TaskListFragment() {
@@ -62,6 +63,12 @@ public class TaskListFragment extends Fragment {
 //        mImageView.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
 //        mEmptyText.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
+        mEmptyText = view.findViewById(R.id.textView_sample_empty);
+        if(mTaskLists.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+        }else {
+            mEmptyText.setVisibility(View.GONE);
+        }
         mRecyclerView
                 .addItemDecoration(
                         new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));

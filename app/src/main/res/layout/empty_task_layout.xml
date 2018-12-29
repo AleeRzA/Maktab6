@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:padding="16dp"
-        android:src="@drawable/icon_papers" />
+        android:src="@drawable/circle_shape" />
 
     <TextView
         android:id="@+id/textView_sample_empty"

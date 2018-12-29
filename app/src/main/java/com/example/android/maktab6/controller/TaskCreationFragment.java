@@ -30,6 +30,7 @@ public class TaskCreationFragment extends Fragment  {
     private EditText mDescription;
     private Button mCreateBtn;
     private List<Task> mTaskList;
+    private static boolean isEditFrag = false;
 
     private Task newTask;
 
@@ -43,17 +44,20 @@ public class TaskCreationFragment extends Fragment  {
         args.putSerializable(TASK_ID,taskId);
         TaskCreationFragment fragment = new TaskCreationFragment();
         fragment.setArguments(args);
+        isEditFrag = true;
         return fragment;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTaskList = TaskRepo.getInstance().getTasks();
-        if(getArguments().getSerializable(TASK_ID) == null)
-            newTask = new Task();
-        else{
-            newTask = (Task) getArguments().getSerializable(TASK_ID);
+
+        newTask = new Task();
+        if(isEditFrag) {
+            Task task = (Task) getArguments().getSerializable(TASK_ID);
+            newTask = task;
         }
+
 
     }
 
