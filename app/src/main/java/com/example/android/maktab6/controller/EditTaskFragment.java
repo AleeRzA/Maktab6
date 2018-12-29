@@ -1,6 +1,8 @@
 package com.example.android.maktab6.controller;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +26,7 @@ public class EditTaskFragment extends Fragment {
 
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
+    private static final int REQUEST_CODE = 0;
     private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
@@ -78,13 +81,25 @@ public class EditTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Task is edit.", Toast.LENGTH_SHORT).show();
-
+                TaskCreationFragment taskCreationFragment = TaskCreationFragment.newInstance(mTask.getId());
+                taskCreationFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
+                getFragmentManager().beginTransaction()
+                                    .add(R.id.container_layout, taskCreationFragment)
+                                    .commit();
             }
         });
         mEditText.setText(mTask.getDescription());
         return view;
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode != Activity.RESULT_OK)
+            return;
+        if(requestCode == REQUEST_CODE){
+//            mTask = (Task) data.getSerializableExtra(NEW_TASK);
+        }
+    }
 }
 

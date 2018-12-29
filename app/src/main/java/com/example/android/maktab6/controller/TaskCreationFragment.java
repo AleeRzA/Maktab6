@@ -49,7 +49,12 @@ public class TaskCreationFragment extends Fragment  {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTaskList = TaskRepo.getInstance().getTasks();
-        newTask = new Task();
+        if(getArguments().getSerializable(TASK_ID) == null)
+            newTask = new Task();
+        else{
+            newTask = (Task) getArguments().getSerializable(TASK_ID);
+        }
+
     }
 
     @Override

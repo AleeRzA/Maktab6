@@ -18,6 +18,17 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/E:/ANDROID-STUDIO/android_studio_installation/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_content_paste_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="image">
                                         <value>
                                           <PersistentState>
@@ -34,9 +45,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="E:\Maktab_Sharif\1.Sessions\jalase17\HomeWork6\icon_checkmark.png" />
-                                      <entry key="outputName" value="icon_checkmark" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="imageAsset" value="E:\Maktab_Sharif\1.Sessions\jalase17\HomeWork6\empty_pic.png" />
+                                      <entry key="outputName" value="icon_task_empty" />
                                       <entry key="themeColor" value="020709" />
                                     </map>
                                   </option>
@@ -57,6 +67,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
