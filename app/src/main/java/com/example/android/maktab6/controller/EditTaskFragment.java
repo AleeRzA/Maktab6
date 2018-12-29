@@ -27,7 +27,7 @@ public class EditTaskFragment extends Fragment {
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
     private static final int REQUEST_CODE = 0;
-    private static final String STRING_TASK_ID = "com.example.android.maktab6.controller.task_id";
+    public static final String STRING_TASK_ID = "com.example.android.maktab6.controller.task_id";
     private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
