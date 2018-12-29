@@ -6,4 +6,5 @@
     tools:context=".controller.TaskListFragment"
     android:id="@+id/recycler_view_listFragment"
     android:padding="16dp">
+
 </android.support.v7.widget.RecyclerView>

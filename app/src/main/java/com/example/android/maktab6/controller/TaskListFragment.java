@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.maktab6.R;
@@ -34,6 +33,7 @@ public class TaskListFragment extends Fragment {
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
     private int _postition;
+
     public TaskListFragment() {
         // Required empty public constructor
     }
@@ -57,6 +57,10 @@ public class TaskListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+//        mImageView = view.findViewById(R.id.imageView_sample_empty);
+//        mEmptyText = view.findViewById(R.id.textView_sample_empty);
+//        mImageView.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
+//        mEmptyText.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
         mRecyclerView
                 .addItemDecoration(
@@ -89,17 +93,13 @@ public class TaskListFragment extends Fragment {
     private class SampleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextTitle;
         private TextView mChar;
-
-        private ImageView mImageView;
-        private TextView mEmptyText;
         private Task mTask;
 
         public SampleHolder(View itemView) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.sampleTask_textView);
             mChar = itemView.findViewById(R.id.sampleTask_circleShapeView);
-            mImageView = itemView.findViewById(R.id.imageView_sample_empty);
-            mEmptyText = itemView.findViewById(R.id.textView_sample_empty);
+
             itemView.setOnClickListener(this);
 
         }
@@ -109,13 +109,6 @@ public class TaskListFragment extends Fragment {
             mTextTitle.setText(title);
             char firstChar = title.charAt(0);
             mChar.setText(String.valueOf(firstChar));
-            if(task == null){
-                mImageView.setVisibility(View.VISIBLE);
-                mEmptyText.setVisibility(View.VISIBLE);
-            }else {
-                mImageView.setVisibility(View.GONE);
-                mEmptyText.setVisibility(View.GONE);
-            }
         }
         @Override
         public void onClick(View view) {
