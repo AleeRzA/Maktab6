@@ -8,7 +8,7 @@
     android:id="@+id/layout_sample_task">
 
     <TextView
-        android:id="@+id/sampleTask_imageView"
+        android:id="@+id/sampleTask_circleShapeView"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:textColor="#ffff"
@@ -38,7 +38,34 @@
         android:layout_marginBottom="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sampleTask_imageView"
+        app:layout_constraintStart_toEndOf="@+id/sampleTask_circleShapeView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/creation_btn_text" />
+    <ImageView
+        android:id="@+id/imageView_sample_empty"
+        android:layout_width="0dp"
+        android:layout_height="207dp"
+        android:layout_margin="50dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/icon_papers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_sample_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/no_task_comment"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_sample_empty"
+        app:layout_constraintVertical_bias="0.24" />
 </android.support.constraint.ConstraintLayout>

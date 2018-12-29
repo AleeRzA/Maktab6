@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.maktab6.R;
@@ -88,14 +89,19 @@ public class TaskListFragment extends Fragment {
     private class SampleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextTitle;
         private TextView mChar;
+
+        private ImageView mImageView;
+        private TextView mEmptyText;
         private Task mTask;
 
         public SampleHolder(View itemView) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.sampleTask_textView);
-            mChar = itemView.findViewById(R.id.sampleTask_imageView);
+            mChar = itemView.findViewById(R.id.sampleTask_circleShapeView);
+            mImageView = itemView.findViewById(R.id.imageView_sample_empty);
+            mEmptyText = itemView.findViewById(R.id.textView_sample_empty);
             itemView.setOnClickListener(this);
-            _postition = getAdapterPosition();
+
         }
         public void bindSample(Task task){
             mTask = task;
@@ -103,10 +109,18 @@ public class TaskListFragment extends Fragment {
             mTextTitle.setText(title);
             char firstChar = title.charAt(0);
             mChar.setText(String.valueOf(firstChar));
+            if(task == null){
+                mImageView.setVisibility(View.VISIBLE);
+                mEmptyText.setVisibility(View.VISIBLE);
+            }else {
+                mImageView.setVisibility(View.GONE);
+                mEmptyText.setVisibility(View.GONE);
+            }
         }
         @Override
         public void onClick(View view) {
 //            Toast.makeText(getActivity(), mTask.getTitle(), Toast.LENGTH_SHORT).show();
+            _postition = getAdapterPosition();
             Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
             startActivityForResult(intent, REQ_INT);
         }
