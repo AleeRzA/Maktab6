@@ -80,7 +80,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = TaskCreationActivity.newIntent(ViewPagerActivity.this);
+                Intent intent = TaskCreationActivity.newIntent(ViewPagerActivity.this, null);
                 startActivity(intent);
             }
         });

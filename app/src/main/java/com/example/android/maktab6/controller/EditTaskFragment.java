@@ -1,7 +1,6 @@
 package com.example.android.maktab6.controller;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +15,7 @@ import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepo;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -26,13 +26,14 @@ public class EditTaskFragment extends Fragment {
 
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
-    private static final int REQUEST_CODE = 0;
     public static final String STRING_TASK_ID = "com.example.android.maktab6.controller.task_id";
+    private static final int REQUEST_CODE1 = 11;
     private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
     private TextView mEditBtn;
     private TextView mDoneBtn;
+    private List<Task> mTasks;
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -51,6 +52,7 @@ public class EditTaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID taskId = (UUID) getArguments().getSerializable(TASK_ID);
         mTask = TaskRepo.getInstance().getTaskById(taskId);
+        mTasks = TaskRepo.getInstance().getTasks();
         getActivity().setTitle(mTask.getTitle());
     }
 
@@ -68,6 +70,8 @@ public class EditTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
+                TaskRepo.getInstance().removeTask(mTask.getId());
+                getActivity().onBackPressed();
             }
         });
         mDoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -75,36 +79,25 @@ public class EditTaskFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
                 mTask.setDone(true);
-                getActivity().finish();
+                getActivity().onBackPressed();
             }
         });
         mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Toast.makeText(getActivity(), "Task is edit.", Toast.LENGTH_SHORT).show();
 //                TaskCreationFragment taskCreationFragment = TaskCreationFragment.newInstance(mTask.getId());
 ////                taskCreationFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
 //               getActivity().getSupportFragmentManager().beginTransaction()
 //                                    .replace(R.id.container_layout, taskCreationFragment)
 //                                    .addToBackStack(null)
 //                                    .commit();
-            Intent intent = TaskCreationActivity.newIntent(getActivity());
-            intent.putExtra(STRING_TASK_ID,mTask.getId());
-            startActivity(intent);
+            Intent intent = TaskCreationActivity.newIntent(getActivity(),mTask.getId());
+            startActivityForResult(intent, REQUEST_CODE1);
             }
         });
         mEditText.setText(mTask.getDescription());
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode != Activity.RESULT_OK)
-            return;
-        if(requestCode == REQUEST_CODE){
-//            mTask = (Task) data.getSerializableExtra(NEW_TASK);
-        }
-    }
 }
 

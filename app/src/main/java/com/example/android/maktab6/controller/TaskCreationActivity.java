@@ -7,18 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.maktab6.R;
-import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
 
-import java.util.List;
 import java.util.UUID;
 
 public class TaskCreationActivity extends AppCompatActivity {
+    private static final String TASK_UUID = "com.example.android.maktab6.controller.task_uuid";
     private UUID mTaskId;
-    private List<Task> mTasks;
-    private TaskCreationFragment mFragment;
-    public static Intent newIntent(Context context){
+
+    public static Intent newIntent(Context context, UUID id){
         Intent intent = new Intent(context, TaskCreationActivity.class);
+        intent.putExtra(TASK_UUID,id);
         return intent;
     }
     @Override
@@ -27,16 +25,12 @@ public class TaskCreationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_creation);
         mTaskId = (UUID) getIntent().getSerializableExtra(EditTaskFragment.STRING_TASK_ID);
 
-        if(TaskRepo.getInstance().getTaskById(mTaskId) != null){
-            mFragment = TaskCreationFragment.newInstance(mTaskId);
-        } else {
-            mFragment = new TaskCreationFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            if (manager.findFragmentById(R.id.container_layout) == null) {
-                manager.beginTransaction()
-                        .add(R.id.container_layout, mFragment)
-                        .commit();
-            }
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager.findFragmentById(R.id.container_layout) == null) {
+            manager.beginTransaction()
+                    .add(R.id.container_layout, TaskCreationFragment.newInstance(mTaskId))
+                    .commit();
         }
+
     }
 }

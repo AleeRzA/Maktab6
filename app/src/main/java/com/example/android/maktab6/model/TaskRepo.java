@@ -30,4 +30,12 @@ public class TaskRepo {
         }
         return null;
     }
+    public List<Task> removeTask(UUID uuid){
+        for(Task task:mTasks){
+            if(task.getId().equals(uuid)){
+                mTasks.remove(task);
+            }
+        }
+        return mTasks;
+    }
 }
