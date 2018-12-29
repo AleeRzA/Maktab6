@@ -58,7 +58,6 @@ public class TaskCreationFragment extends Fragment  {
             newTask = task;
         }
 
-
     }
 
     @Override

@@ -27,6 +27,7 @@ public class EditTaskFragment extends Fragment {
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
     private static final int REQUEST_CODE = 0;
+    private static final String STRING_TASK_ID = "com.example.android.maktab6.controller.task_id";
     private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
@@ -80,12 +81,16 @@ public class EditTaskFragment extends Fragment {
         mEditBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Task is edit.", Toast.LENGTH_SHORT).show();
-                TaskCreationFragment taskCreationFragment = TaskCreationFragment.newInstance(mTask.getId());
-                taskCreationFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
-                getFragmentManager().beginTransaction()
-                                    .add(R.id.container_layout, taskCreationFragment)
-                                    .commit();
+            Toast.makeText(getActivity(), "Task is edit.", Toast.LENGTH_SHORT).show();
+//                TaskCreationFragment taskCreationFragment = TaskCreationFragment.newInstance(mTask.getId());
+////                taskCreationFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
+//               getActivity().getSupportFragmentManager().beginTransaction()
+//                                    .replace(R.id.container_layout, taskCreationFragment)
+//                                    .addToBackStack(null)
+//                                    .commit();
+            Intent intent = TaskCreationActivity.newIntent(getActivity());
+            intent.putExtra(STRING_TASK_ID,mTask.getId());
+            startActivity(intent);
             }
         });
         mEditText.setText(mTask.getDescription());
