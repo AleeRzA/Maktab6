@@ -18,22 +18,33 @@ import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepo;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TaskCreationFragment extends Fragment  {
 
+    private static final String TASK_ID = "task_id";
     private EditText mTitle;
     private EditText mDescription;
     private Button mCreateBtn;
     private List<Task> mTaskList;
 
     private Task newTask;
+
     public TaskCreationFragment() {
         // Required empty public constructor
     }
 
+    public static TaskCreationFragment newInstance(UUID taskId) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(TASK_ID,taskId);
+        TaskCreationFragment fragment = new TaskCreationFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

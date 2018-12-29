@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +25,10 @@ public class EditTaskFragment extends Fragment {
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
     private Task mTask;
-    private EditText mEditText;
+    private TextView mEditText;
     private TextView mDeleteBtn;
-    private EditText mDone;
+    private TextView mEditBtn;
+    private TextView mDoneBtn;
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -57,12 +57,28 @@ public class EditTaskFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_task, container, false);
         mEditText = view.findViewById(R.id.editFrag_desc);
         mDeleteBtn = view.findViewById(R.id.editFrag_deleteBtn);
-
+        mEditBtn = view.findViewById(R.id.editFrag_editBtn);
+        mDoneBtn = view.findViewById(R.id.editFrag_doneBtn);
 
         mDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
+            }
+        });
+        mDoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
+                mTask.setDone(true);
+                getActivity().finish();
+            }
+        });
+        mEditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Task is edit.", Toast.LENGTH_SHORT).show();
+
             }
         });
         mEditText.setText(mTask.getDescription());
