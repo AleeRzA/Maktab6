@@ -25,6 +25,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
     private List<Task> mTasks;
+    private FragmentStatePagerAdapter mAdapter;
     public static Intent newIntent(Context context){
         Intent intent = new Intent(context, ViewPagerActivity.class);
         return intent;
@@ -40,21 +41,16 @@ public class ViewPagerActivity extends AppCompatActivity {
         mActionButton = findViewById(R.id.main_floating_btn);
         mTasks = TaskRepo.getInstance().getTasks();
         mTabLayout.setupWithViewPager(mViewPager);
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+        mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-//                if(position != 0)
-//                    return EmptyTaskFragment.newInstance();
-                if (mTasks.size() != 0){
-                        return TaskListFragment.newInstance();
-                }else return EmptyTaskFragment.newInstance();
+                return TaskListFragment.newInstance();
             }
 
             @Override
             public int getCount() {
                 return 3;
             }
-
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
@@ -72,12 +68,12 @@ public class ViewPagerActivity extends AppCompatActivity {
                 }
                 return title;
             }
-
             @Override
             public int getItemPosition(@NonNull Object object) {
                 return POSITION_NONE;
             }
-        });
+        };
+        mViewPager.setAdapter(mAdapter);
 
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +86,11 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        mViewPager.addOnAdapterChangeListener(new ViewPager.OnAdapterChangeListener() {
-//            @Override
-//            public void onAdapterChanged(@NonNull ViewPager viewPager, @Nullable PagerAdapter oldAdapter, @Nullable PagerAdapter newAdapter) {
-//                mViewPager.setAdapter(newAdapter);
-//            }
-//        });
-//    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mTasks.size() > 0){
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 }
