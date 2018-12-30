@@ -153,9 +153,18 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-                    Task task = mTasks.get(position);
-                    ((SampleHolder)holder).bindSample(task);
+            Task task = mTasks.get(position);
+            switch (holder.getItemViewType()) {
+                case 1:
+                    ViewPagerActivity.setGetView(1);
+                    break;
+                case 2:
+                    ViewPagerActivity.setGetView(2);
+                    break;
+                default:
+                    ViewPagerActivity.setGetView(0);
+            }
+            ((SampleHolder)holder).bindSample(task);
         }
 
         @Override
@@ -165,7 +174,12 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            return super.getItemViewType(position);
+            Task task = mTasks.get(position);
+            if(task.isDone())
+                return 1;
+            else
+                return 2;
+
         }
     }
     }
