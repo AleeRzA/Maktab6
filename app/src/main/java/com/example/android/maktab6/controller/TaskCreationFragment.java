@@ -113,13 +113,13 @@ public class TaskCreationFragment extends Fragment  {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mRepository.getTaskById(mTaskId) == null){
+//                if(mRepository.getTaskById(mTaskId) == null){
                     mRepository.addToList(mTask);
-                }
+//                }
 
 //                getActivity().setResult(Activity.RESULT_OK,
 //                        getActivity().setIntent(new Intent(TASK_EDITED, mTask)));
-//                getActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         });
         return view;
