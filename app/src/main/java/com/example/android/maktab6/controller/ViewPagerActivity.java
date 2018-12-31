@@ -25,9 +25,8 @@ public class ViewPagerActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
     private List<Task> mTasks;
-    private Task mTask;
     private FragmentStatePagerAdapter mAdapter;
-    private static int getView;
+
 
     public static Intent newIntent(Context context){
         Intent intent = new Intent(context, ViewPagerActivity.class);
@@ -49,15 +48,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-                switch (position) {
-                    case 1:
-
-                        break;
-                    case 2:
-                        break;
-                    default:
-                }
-                return TaskListFragment.newInstance();
+                return TaskListFragment.newInstance(position);
             }
 
             @Override
@@ -86,6 +77,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                 return POSITION_NONE;
             }
         };
+
         mViewPager.setAdapter(mAdapter);
 
         mActionButton.setOnClickListener(new View.OnClickListener() {
@@ -107,11 +99,4 @@ public class ViewPagerActivity extends AppCompatActivity {
         }
     }
 
-    public static int getGetView() {
-        return getView;
-    }
-
-    public static void setGetView(int getView) {
-        ViewPagerActivity.getView = getView;
-    }
 }

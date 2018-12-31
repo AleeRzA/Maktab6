@@ -7,9 +7,12 @@ import java.util.UUID;
 public class TaskRepo {
     private static TaskRepo instance;
     private List<Task> mTasks;
+    private boolean mDoneChecker;
+
     private TaskRepo(){
         mTasks = new ArrayList<>();
     }
+
     public static TaskRepo getInstance(){
         if(instance == null)
             instance = new TaskRepo();
@@ -38,23 +41,33 @@ public class TaskRepo {
         }
         return mTasks;
     }
-    public List<Task> getDoneTasks( ){
+    public List<Task> getDoneTasks(){
         List<Task> mDones = new ArrayList<>();
         for(Task task:mTasks){
-            if(task.isDone()){
-                mDones.add(task);
+            if (!isDoneChecker()) {
+                continue;
             }
+            getUndones().remove(task);
+            mDones.add(task);
         }
         return mDones;
     }
     public List<Task> getUndones(){
         List<Task> undones = new ArrayList<>();
         for(Task task:mTasks){
-            if(!task.isDone()){
-                undones.add(task);
+            if (isDoneChecker()) {
+                continue;
             }
+            undones.add(task);
         }
         return undones;
     }
 
+    public boolean isDoneChecker() {
+        return mDoneChecker;
+    }
+
+    public void setDoneChecker(boolean doneChecker) {
+        mDoneChecker = doneChecker;
+    }
 }

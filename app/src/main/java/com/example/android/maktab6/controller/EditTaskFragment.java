@@ -15,7 +15,6 @@ import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepo;
 
-import java.util.List;
 import java.util.UUID;
 
 
@@ -33,7 +32,7 @@ public class EditTaskFragment extends Fragment {
     private TextView mDeleteBtn;
     private TextView mEditBtn;
     private TextView mDoneBtn;
-    private List<Task> mTasks;
+
     public EditTaskFragment() {
         // Required empty public constructor
     }
@@ -52,7 +51,7 @@ public class EditTaskFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID taskId = (UUID) getArguments().getSerializable(TASK_ID);
         mTask = TaskRepo.getInstance().getTaskById(taskId);
-        mTasks = TaskRepo.getInstance().getTasks();
+
         getActivity().setTitle(mTask.getTitle());
     }
 
@@ -78,7 +77,8 @@ public class EditTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
-                mTask.setDone(true);
+                    mTask.setDone(true);
+                    TaskRepo.getInstance().setDoneChecker(true);
                 getActivity().onBackPressed();
             }
         });

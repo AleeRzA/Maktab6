@@ -28,20 +28,20 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
-    public static final int REQ_INT = 111;
+
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
     private TextView mEmptyText;
-    private int _postition;
+    private int _position;
 
     public TaskListFragment() {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance() {
+    public static TaskListFragment newInstance(int viewId) {
         Bundle args = new Bundle();
-//        args.putSerializable(ARGS_TAK_ID, taskId);
+        args.putInt(ARGS_TAK_ID, viewId);
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -50,7 +50,21 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTaskLists = TaskRepo.getInstance().getTasks();
+        TaskRepo repository = TaskRepo.getInstance();
+        int viewId = getArguments().getInt(ARGS_TAK_ID);
+        viewChecker(repository, viewId);
+    }
+
+    private void viewChecker(TaskRepo repository, int viewId) {
+        if(viewId == 0){
+            mTaskLists = repository.getTasks();
+        }
+        if (viewId == 1){
+            mTaskLists = repository.getDoneTasks();
+        }
+        if (viewId == 2){
+            mTaskLists = repository.getUndones();
+        }
     }
 
     @Override
@@ -85,13 +99,14 @@ public class TaskListFragment extends Fragment {
     }
 
     private void updateUI() {
-        TaskRepo taskRepo = TaskRepo.getInstance();
-        mTaskLists = taskRepo.getTasks();
+//        TaskRepo taskRepo = TaskRepo.getInstance();
+//        mTaskLists = taskRepo.getTasks();
+
         if(mTaskAdapter == null) {
             mTaskAdapter = new TaskAdapter(mTaskLists);
             mRecyclerView.setAdapter(mTaskAdapter);
         } else {
-            mTaskAdapter.notifyItemChanged(_postition);
+            mTaskAdapter.notifyItemChanged(_position);
         }
     }
 
@@ -120,9 +135,9 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onClick(View view) {
 //            Toast.makeText(getActivity(), mTask.getTitle(), Toast.LENGTH_SHORT).show();
-            _postition = getAdapterPosition();
+            _position = getAdapterPosition();
             Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
-            startActivityForResult(intent, REQ_INT);
+            startActivity(intent);
         }
     }
     //--------------------------------------------------/
@@ -154,34 +169,23 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             Task task = mTasks.get(position);
-            switch (holder.getItemViewType()) {
-                case 1:
-                    ViewPagerActivity.setGetView(1);
-                    break;
-                case 2:
-                    ViewPagerActivity.setGetView(2);
-                    break;
-                default:
-                    ViewPagerActivity.setGetView(0);
-            }
             ((SampleHolder)holder).bindSample(task);
         }
 
         @Override
         public int getItemCount() {
-
             return mTasks.size();
         }
 
-        @Override
-        public int getItemViewType(int position) {
-            Task task = mTasks.get(position);
-            if(task.isDone())
-                return 1;
-            else
-                return 2;
-
-        }
+//        @Override
+//        public int getItemViewType(int position) {
+//            Task task = mTasks.get(position);
+//            if(task.isDone())
+//                return 1;
+//            else
+//                return 2;
+//
+//        }
     }
     }
 

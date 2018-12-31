@@ -56,10 +56,8 @@ public class TaskCreationFragment extends Fragment  {
         mTaskList = mRepository.getTasks();
         Bundle arguments = getArguments();
         if(arguments != null && arguments.containsKey(TASK_ID)) {
-
             mTaskId = (UUID) getArguments().getSerializable(TASK_ID);
             mTask = mRepository.getTaskById(mTaskId);
-
         }
         else if(savedInstanceState != null)
             return;

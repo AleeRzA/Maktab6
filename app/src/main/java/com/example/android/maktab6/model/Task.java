@@ -12,7 +12,7 @@ public class Task {
     private String mDescription;
     private Date mDate;
     private UUID mId;
-    private boolean mDone;
+    private boolean mDone = false;
 
 
 

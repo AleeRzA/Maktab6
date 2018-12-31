@@ -7,14 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.android.maktab6.R;
-import com.example.android.maktab6.model.Task;
 
 import java.util.UUID;
 
 public class EditTaskActivity extends AppCompatActivity {
 
     private static final String TASK_ID = "com.example.android.maktab6.controller.taskId";
-    private Task mTask;
+
     public static Intent newIntent(Context context, UUID taskId){
         Intent intent = new Intent(context, EditTaskActivity.class);
         intent.putExtra(TASK_ID,taskId);
