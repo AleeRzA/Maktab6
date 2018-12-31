@@ -23,7 +23,7 @@ public class TaskCreationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_creation);
-        mTaskId = (UUID) getIntent().getSerializableExtra(EditTaskFragment.STRING_TASK_ID);
+        mTaskId = (UUID) getIntent().getSerializableExtra(TASK_UUID);
 
         FragmentManager manager = getSupportFragmentManager();
         if (manager.findFragmentById(R.id.container_layout) == null) {

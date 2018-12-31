@@ -38,4 +38,23 @@ public class TaskRepo {
         }
         return mTasks;
     }
+    public List<Task> getDoneTasks( ){
+        List<Task> mDones = new ArrayList<>();
+        for(Task task:mTasks){
+            if(task.isDone()){
+                mDones.add(task);
+            }
+        }
+        return mDones;
+    }
+    public List<Task> getUndones(){
+        List<Task> undones = new ArrayList<>();
+        for(Task task:mTasks){
+            if(!task.isDone()){
+                undones.add(task);
+            }
+        }
+        return undones;
+    }
+
 }

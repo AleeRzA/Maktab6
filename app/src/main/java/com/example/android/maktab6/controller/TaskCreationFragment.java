@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ public class TaskCreationFragment extends Fragment  {
     private UUID mTaskId;
     private Task mTask;
     private TaskRepo mRepository;
+    private boolean isNew = false;
 
     public TaskCreationFragment() {
         // Required empty public constructor
@@ -58,15 +58,15 @@ public class TaskCreationFragment extends Fragment  {
         if(arguments != null && arguments.containsKey(TASK_ID)) {
 
             mTaskId = (UUID) getArguments().getSerializable(TASK_ID);
-            Log.d("HELLO", mRepository.getTaskById(mTaskId).getTitle());
             mTask = mRepository.getTaskById(mTaskId);
 
         }
-        if(savedInstanceState != null)
+        else if(savedInstanceState != null)
             return;
         else {
             mTask = new Task();
             mTaskId = mTask.getId();
+            isNew = true;
         }
     }
 
@@ -118,12 +118,12 @@ public class TaskCreationFragment extends Fragment  {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(mRepository.getTaskById(mTaskId) == null){
+                if(isNew){
                     mRepository.addToList(mTask);
-//                }
+                }
 
 //                getActivity().setResult(Activity.RESULT_OK,
-//                        getActivity().setIntent(new Intent(TASK_EDITED, mTask)));
+//                        getActivity().setIntent(new Intent(TASK_EDITED, mTask.getId())));
                 getActivity().onBackPressed();
             }
         });

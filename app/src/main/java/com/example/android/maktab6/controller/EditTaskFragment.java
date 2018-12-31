@@ -26,8 +26,8 @@ public class EditTaskFragment extends Fragment {
 
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
-    public static final String STRING_TASK_ID = "com.example.android.maktab6.controller.task_id";
-    private static final int REQUEST_CODE1 = 11;
+
+
     private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
@@ -92,7 +92,7 @@ public class EditTaskFragment extends Fragment {
 //                                    .addToBackStack(null)
 //                                    .commit();
             Intent intent = TaskCreationActivity.newIntent(getActivity(),mTask.getId());
-            startActivityForResult(intent, REQUEST_CODE1);
+            startActivity(intent);
             }
         });
         mEditText.setText(mTask.getDescription());

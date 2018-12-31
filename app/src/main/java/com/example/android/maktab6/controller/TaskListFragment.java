@@ -169,6 +169,7 @@ public class TaskListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
+
             return mTasks.size();
         }
 
