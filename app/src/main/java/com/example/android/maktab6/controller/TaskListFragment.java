@@ -29,6 +29,7 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
+    public static final int REQUEST_CODE = 0;
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
@@ -74,10 +75,7 @@ public class TaskListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
-//        mImageView = view.findViewById(R.id.imageView_sample_empty);
-//        mEmptyText = view.findViewById(R.id.textView_sample_empty);
-//        mImageView.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
-//        mEmptyText.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
+
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
         mEmptyText = view.findViewById(R.id.textView_sample_empty);
         mEmptyImage = view.findViewById(R.id.imageView_sample_empty);
@@ -138,8 +136,11 @@ public class TaskListFragment extends Fragment {
         }
         @Override
         public void onClick(View view) {
-//            Toast.makeText(getActivity(), mTask.getTitle(), Toast.LENGTH_SHORT).show();
+
             _position = getAdapterPosition();
+            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
+            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE);
+
             Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
             startActivity(intent);
         }
