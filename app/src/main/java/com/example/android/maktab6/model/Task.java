@@ -17,7 +17,9 @@ public class Task {
 
 
     public Task( ){
+
         mId = UUID.randomUUID();
+        mDate = new Date();
     }
 
     public boolean isDone() {

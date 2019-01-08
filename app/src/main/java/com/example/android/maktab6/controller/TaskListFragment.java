@@ -1,7 +1,6 @@
 package com.example.android.maktab6.controller;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +28,8 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
-    public static final int REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 0;
+    private static final String SHOW_TASK = "show_task";
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
@@ -140,9 +140,10 @@ public class TaskListFragment extends Fragment {
             _position = getAdapterPosition();
             EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
             editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE);
+            editTaskFragment.show(getFragmentManager(), SHOW_TASK);
 
-            Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
-            startActivity(intent);
+//            Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
+//            startActivity(intent);
         }
     }
     //--------------------------------------------------/
@@ -182,15 +183,6 @@ public class TaskListFragment extends Fragment {
             return mTasks.size();
         }
 
-//        @Override
-//        public int getItemViewType(int position) {
-//            Task task = mTasks.get(position);
-//            if(task.isDone())
-//                return 1;
-//            else
-//                return 2;
-//
-//        }
     }
     }
 
