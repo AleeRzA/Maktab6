@@ -7,67 +7,69 @@ import java.util.UUID;
 public class TaskRepo {
     private static TaskRepo instance;
     private List<Task> mTasks;
-    private boolean mDoneChecker;
 
-    private TaskRepo(){
+    private TaskRepo() {
         mTasks = new ArrayList<>();
     }
 
-    public static TaskRepo getInstance(){
-        if(instance == null)
+    public static TaskRepo getInstance() {
+        if (instance == null)
             instance = new TaskRepo();
         return instance;
     }
-    public List<Task> addToList(Task task){
-         mTasks.add(task);
-         return mTasks;
-    }
-    public List<Task> getTasks(){
+
+    public List<Task> addToList(Task task) {
+        mTasks.add(task);
         return mTasks;
     }
-    public Task getTaskById(UUID id){
-        for(Task task:mTasks){
-            if(task.getId().equals(id)){
+
+    public List<Task> getTasks() {
+        return mTasks;
+    }
+
+    public Task getTaskById(UUID id) {
+        for (Task task : mTasks) {
+            if (task.getId().equals(id)) {
                 return task;
             }
         }
         return null;
     }
-    public List<Task> removeTask(UUID uuid){
-        for(Task task:mTasks){
-            if(task.getId().equals(uuid)){
+
+    public List<Task> removeTask(UUID uuid) {
+        for (Task task : mTasks) {
+            if (task.getId().equals(uuid)) {
                 mTasks.remove(task);
             }
         }
         return mTasks;
     }
-    public List<Task> getDoneTasks(){
+
+    public List<Task> getDoneTasks() {
         List<Task> mDones = new ArrayList<>();
-        for(Task task:mTasks){
-            if (!isDoneChecker()) {
-                continue;
+        for (Task task : mTasks) {
+            if (task.isDone()) {
+                mDones.add(task);
             }
-            getUndones().remove(task);
-            mDones.add(task);
         }
         return mDones;
     }
-    public List<Task> getUndones(){
+
+    public List<Task> getUndones() {
         List<Task> undones = new ArrayList<>();
-        for(Task task:mTasks){
-            if (isDoneChecker()) {
-                continue;
+        for (Task task : mTasks) {
+            if (!task.isDone()) {
+                undones.add(task);
             }
-            undones.add(task);
         }
         return undones;
     }
-
-    public boolean isDoneChecker() {
-        return mDoneChecker;
+    public void setDoneTask(UUID uuid, boolean done){
+        Task taskById = getTaskById(uuid);
+        taskById.setDone(done);
     }
 
-    public void setDoneChecker(boolean doneChecker) {
-        mDoneChecker = doneChecker;
-    }
+
+
+
 }

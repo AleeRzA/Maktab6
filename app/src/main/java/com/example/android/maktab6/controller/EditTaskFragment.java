@@ -26,8 +26,8 @@ public class EditTaskFragment extends Fragment {
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
 
-
-    private Task mTask;
+    private UUID taskId;
+    //    private Task mTask;
     private TextView mEditText;
     private TextView mDeleteBtn;
     private TextView mEditBtn;
@@ -38,7 +38,7 @@ public class EditTaskFragment extends Fragment {
     }
 
     public static EditTaskFragment newInstance(UUID taskId) {
-        
+
         Bundle args = new Bundle();
         args.putSerializable(TASK_ID, taskId);
         EditTaskFragment fragment = new EditTaskFragment();
@@ -49,8 +49,8 @@ public class EditTaskFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID taskId = (UUID) getArguments().getSerializable(TASK_ID);
-        mTask = TaskRepo.getInstance().getTaskById(taskId);
+        taskId = (UUID) getArguments().getSerializable(TASK_ID);
+        Task mTask = TaskRepo.getInstance().getTaskById(taskId);
 
         getActivity().setTitle(mTask.getTitle());
     }
@@ -69,7 +69,7 @@ public class EditTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
-                TaskRepo.getInstance().removeTask(mTask.getId());
+                TaskRepo.getInstance().removeTask(taskId);
                 getActivity().onBackPressed();
             }
         });
@@ -77,8 +77,7 @@ public class EditTaskFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
-                    mTask.setDone(true);
-                    TaskRepo.getInstance().setDoneChecker(true);
+                TaskRepo.getInstance().setDoneTask(taskId, true);
                 getActivity().onBackPressed();
             }
         });
@@ -91,11 +90,11 @@ public class EditTaskFragment extends Fragment {
 //                                    .replace(R.id.container_layout, taskCreationFragment)
 //                                    .addToBackStack(null)
 //                                    .commit();
-            Intent intent = TaskCreationActivity.newIntent(getActivity(),mTask.getId());
-            startActivity(intent);
+                Intent intent = TaskCreationActivity.newIntent(getActivity(), taskId);
+                startActivity(intent);
             }
         });
-        mEditText.setText(mTask.getDescription());
+//        mEditText.setText(mTask.getDescription());
         return view;
     }
 
