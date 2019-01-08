@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.maktab6.R;
@@ -33,6 +34,7 @@ public class TaskListFragment extends Fragment {
     private List<Task> mTaskLists;
     private TaskAdapter mTaskAdapter;
     private TextView mEmptyText;
+    private ImageView mEmptyImage;
     private int _position;
 
     public TaskListFragment() {
@@ -78,10 +80,12 @@ public class TaskListFragment extends Fragment {
 //        mEmptyText.setVisibility(mTaskLists.size() > 0 ? View.GONE : View.VISIBLE );
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
         mEmptyText = view.findViewById(R.id.textView_sample_empty);
+        mEmptyImage = view.findViewById(R.id.imageView_sample_empty);
         if(mTaskLists.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
         }else {
             mEmptyText.setVisibility(View.GONE);
+            mEmptyImage.setVisibility(View.GONE);
         }
         mRecyclerView
                 .addItemDecoration(
