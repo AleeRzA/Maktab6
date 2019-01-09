@@ -83,8 +83,10 @@ public class TaskListFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.recycler_view_listFragment);
         mEmptyText = view.findViewById(R.id.textView_sample_empty);
         mEmptyImage = view.findViewById(R.id.imageView_sample_empty);
+
         if(mTaskLists.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
+
         }else {
             mEmptyText.setVisibility(View.GONE);
             mEmptyImage.setVisibility(View.GONE);
@@ -114,14 +116,22 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-            mTaskLists.clear();
+            removeAll();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void removeAll() {
+        mTaskLists.clear();
+        mEmptyText.setVisibility(View.VISIBLE);
+        mEmptyImage.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.GONE);
+    }
+
 
     private void updateUI() {
+
         if(mTaskAdapter == null) {
             mTaskAdapter = new TaskAdapter(mTaskLists);
             mRecyclerView.setAdapter(mTaskAdapter);

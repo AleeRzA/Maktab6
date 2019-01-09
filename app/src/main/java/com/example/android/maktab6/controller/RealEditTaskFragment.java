@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
@@ -26,6 +27,11 @@ import java.util.UUID;
 public class RealEditTaskFragment extends DialogFragment implements View.OnClickListener {
 
     private static final String TASK_ID_EDIT = "task_id_edit";
+    private static final int REQUEST_CODE_DATE = 10;
+    private static final int REQUEST_CODE_TIME = 11;
+    private static final String TAG_DATE_PICKER = "date_datePicker";
+    private static final String TAG_TIME_PICKER = "time_timePicker";
+
     private EditText mEditTitle;
     private EditText mEditDescription;
     private TextView mRealDate;
@@ -79,6 +85,17 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
-
+        if(view.getId() == R.id.realFragDate_btn_edit){
+            Toast.makeText(getActivity(), "date", Toast.LENGTH_SHORT).show();
+            DateTimeFragment dateTimeFragment = DateTimeFragment.newInstance(mTask.getDate());
+            dateTimeFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_DATE);
+            dateTimeFragment.show(getFragmentManager(), TAG_DATE_PICKER);
+        }
+        if(view.getId() == R.id.realFragTime_btn_edit){
+            Toast.makeText(getActivity(), "time", Toast.LENGTH_SHORT).show();
+            DateTimeFragment dateTimeFragment = DateTimeFragment.newInstance(mTask.getDate());
+            dateTimeFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_TIME);
+            dateTimeFragment.show(getFragmentManager(), TAG_TIME_PICKER);
+        }
     }
 }
