@@ -17,4 +17,8 @@
     <string name="edit_btn">EDIT</string>
     <string name="OK_btn">BACK</string>
     <string name="delete_all">DELETE ALL</string>
+
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_guest">GUEST</string>
 </resources>
