@@ -28,6 +28,8 @@ public class EditTaskFragment extends DialogFragment {
 
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
+    private static final int REQUEST_CODE = 1;
+    private static final String REAL_EDIT_TASK = "real_edit_task";
 
 
     private Task mTask;
@@ -37,6 +39,7 @@ public class EditTaskFragment extends DialogFragment {
     private TextView mTimeText;
     private Button mEditButton;
     private Button mOkButton;
+    private UUID mUUID;
 
     private TextView mDeleteBtn;
     private TextView mEditBtn;
@@ -58,8 +61,8 @@ public class EditTaskFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UUID taskId = (UUID) getArguments().getSerializable(TASK_ID);
-        mTask = TaskRepo.getInstance().getTaskById(taskId);
+        mUUID = (UUID) getArguments().getSerializable(TASK_ID);
+        mTask = TaskRepo.getInstance().getTaskById(mUUID);
 
         getActivity().setTitle(mTask.getTitle());
     }
@@ -89,7 +92,9 @@ public class EditTaskFragment extends DialogFragment {
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(mUUID);
+                realEditTaskFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
+                realEditTaskFragment.show(getFragmentManager(), REAL_EDIT_TASK);
             }
         });
         mOkButton.setOnClickListener(new View.OnClickListener() {

@@ -23,7 +23,7 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RealEditTaskFragment extends DialogFragment {
+public class RealEditTaskFragment extends DialogFragment implements View.OnClickListener {
 
     private static final String TASK_ID_EDIT = "task_id_edit";
     private EditText mEditTitle;
@@ -72,7 +72,13 @@ public class RealEditTaskFragment extends DialogFragment {
         mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getDate()));
         mRealTime.setText(new SimpleDateFormat("hh:mm a").format(mTask.getDate()));
 
+        mEditDateBtn.setOnClickListener(this);
+        mEditTimeBtn.setOnClickListener(this);
         return view;
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }
