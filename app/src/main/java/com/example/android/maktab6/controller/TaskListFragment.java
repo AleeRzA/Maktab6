@@ -9,6 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -56,6 +59,7 @@ public class TaskListFragment extends Fragment {
         TaskRepo repository = TaskRepo.getInstance();
         int viewId = getArguments().getInt(ARGS_TAK_ID);
         viewChecker(repository, viewId);
+        setHasOptionsMenu(true);
     }
 
     private void viewChecker(TaskRepo repository, int viewId) {
@@ -98,6 +102,26 @@ public class TaskListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
+
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_task_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()== R.id.removeAll_btn) {
+            removeUpdateMethod();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void removeUpdateMethod() {
+        TaskRepo.getInstance().removeAllTasks();
     }
 
     private void updateUI() {

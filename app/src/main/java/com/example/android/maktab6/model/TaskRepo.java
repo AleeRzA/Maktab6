@@ -33,13 +33,10 @@ public class TaskRepo {
         }
         return null;
     }
-    public List<Task> removeTask(UUID uuid){
+    public void removeAllTasks(){
         for(Task task:mTasks){
-            if(task.getId().equals(uuid)){
-                mTasks.remove(task);
-            }
+            mTasks.remove(task);
         }
-        return mTasks;
     }
     public List<Task> getDoneTasks(){
         List<Task> mDones = new ArrayList<>();
