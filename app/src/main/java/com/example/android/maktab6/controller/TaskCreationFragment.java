@@ -22,7 +22,7 @@ import java.util.UUID;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskCreationFragment extends Fragment  {
+public class TaskCreationFragment extends Fragment {
 
     private static final String TASK_ID = "task_id";
     public static final String TASK_EDITED = "task_edited";
@@ -42,24 +42,24 @@ public class TaskCreationFragment extends Fragment  {
     public static TaskCreationFragment newInstance(UUID taskId) {
 
         TaskCreationFragment fragment = new TaskCreationFragment();
-        if(taskId != null){
+        if (taskId != null) {
             Bundle args = new Bundle();
-            args.putSerializable(TASK_ID,taskId);
+            args.putSerializable(TASK_ID, taskId);
             fragment.setArguments(args);
         }
         return fragment;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRepository = TaskRepo.getInstance();
         mTaskList = mRepository.getTasks();
         Bundle arguments = getArguments();
-        if(arguments != null && arguments.containsKey(TASK_ID)) {
+        if (arguments != null && arguments.containsKey(TASK_ID)) {
             mTaskId = (UUID) getArguments().getSerializable(TASK_ID);
             mTask = mRepository.getTaskById(mTaskId);
-        }
-        else if(savedInstanceState != null)
+        } else if (savedInstanceState != null)
             return;
         else {
             mTask = new Task();
@@ -116,16 +116,21 @@ public class TaskCreationFragment extends Fragment  {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isNew){
+                if (isNew) {
                     mRepository.addToList(mTask);
                 }
 
-//                getActivity().setResult(Activity.RESULT_OK,
-//                        getActivity().setIntent(new Intent(TASK_EDITED, mTask.getId())));
-                getActivity().onBackPressed();
+                pressBack();
             }
         });
         return view;
     }
+
+    private void pressBack() {
+        if (getActivity() != null)
+            getActivity().finish();
+            getActivity().onBackPressed();
+    }
+
 
 }
