@@ -9,7 +9,7 @@ public class User {
     private UUID mId;
 
     public User(){
-        mId = UUID.randomUUID();
+
     }
 
     public String getName() {
@@ -40,5 +40,7 @@ public class User {
         return mId;
     }
 
-
+    public void setId(UUID id) {
+        mId = id;
+    }
 }
