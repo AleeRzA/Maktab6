@@ -36,6 +36,7 @@ public class EditTaskFragment extends DialogFragment {
     private TextView mDateText;
     private TextView mTimeText;
     private Button mEditButton;
+    private Button mOkButton;
 
     private TextView mDeleteBtn;
     private TextView mEditBtn;
@@ -78,7 +79,8 @@ public class EditTaskFragment extends DialogFragment {
         mDescriptionText = view.findViewById(R.id.editFrag_desc);
         mDateText = view.findViewById(R.id.editFrag_date);
         mTimeText = view.findViewById(R.id.editFrag_time);
-        mEditButton = view.findViewById(R.id.editFrag_btn);
+        mEditButton = view.findViewById(R.id.editFrag_btn_edit);
+        mOkButton = view.findViewById(R.id.editFrag_btn_ok);
 
         mTitleText.setText(mTask.getTitle());
         mDescriptionText.setText(mTask.getDescription());
@@ -88,6 +90,12 @@ public class EditTaskFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+        mOkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
             }
         });
         return view;

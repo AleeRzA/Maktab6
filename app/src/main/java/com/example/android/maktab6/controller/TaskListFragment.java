@@ -102,7 +102,7 @@ public class TaskListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
-
+        //update sql method...
     }
 
     @Override
@@ -114,24 +114,19 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-            removeUpdateMethod();
+            mTaskLists.clear();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void removeUpdateMethod() {
-        TaskRepo.getInstance().removeAllTasks();
-    }
 
     private void updateUI() {
-//        TaskRepo taskRepo = TaskRepo.getInstance();
-//        mTaskLists = taskRepo.getTasks();
-
         if(mTaskAdapter == null) {
             mTaskAdapter = new TaskAdapter(mTaskLists);
             mRecyclerView.setAdapter(mTaskAdapter);
         } else {
+            mTaskAdapter.setTasks(mTaskLists);
             mTaskAdapter.notifyItemChanged(_position);
         }
     }

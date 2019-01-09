@@ -34,9 +34,7 @@ public class TaskRepo {
         return null;
     }
     public void removeAllTasks(){
-        for(Task task:mTasks){
-            mTasks.remove(task);
-        }
+        mTasks.removeAll(mTasks);
     }
     public List<Task> getDoneTasks(){
         List<Task> mDones = new ArrayList<>();
