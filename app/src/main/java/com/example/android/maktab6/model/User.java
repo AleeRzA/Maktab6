@@ -7,9 +7,11 @@ public class User {
     private String mUserName;
     private String mPassword;
     private UUID mId;
-
     public User(){
-
+        this(UUID.randomUUID());
+    }
+    public User(UUID id){
+        mId = id;
     }
 
     public String getName() {
@@ -40,7 +42,4 @@ public class User {
         return mId;
     }
 
-    public void setId(UUID id) {
-        mId = id;
-    }
 }
