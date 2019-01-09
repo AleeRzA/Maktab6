@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RealEditTaskFragment">
+    android:padding="16dp"
+    tools:context=".controller.RealEditTaskFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         style="?android:listSeparatorTextViewStyle"/>
 
     <EditText
-        android:id="@+id/editFrag_title"
+        android:id="@+id/editReal_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
@@ -27,7 +28,7 @@
         style="?android:listSeparatorTextViewStyle"/>
 
     <EditText
-        android:id="@+id/editFrag_desc"
+        android:id="@+id/editReal_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
