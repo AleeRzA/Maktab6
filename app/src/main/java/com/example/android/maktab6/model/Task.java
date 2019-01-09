@@ -13,14 +13,16 @@ public class Task {
     private Date mDate;
     private UUID mId;
     private boolean mDone = false;
-
-
+    private int mUserId;
 
     public Task( ){
-
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+    public Task(UUID taskId){
+        mId = taskId;
         mDate = new Date();
     }
+
 
     public boolean isDone() {
         return mDone;
@@ -58,4 +60,12 @@ public class Task {
         return mId;
     }
 
+
+    public int getUserId() {
+        return mUserId;
+    }
+
+    public void setUserId(int userId) {
+        mUserId = userId;
+    }
 }
