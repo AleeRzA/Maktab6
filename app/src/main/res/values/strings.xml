@@ -12,6 +12,7 @@
     <string name="creation_btn_text">Done</string>
     <string name="task_saved_message">Task Successfully Saved</string>
 
+    <string name="login_alertDlg">WRONG ENTRY!</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="edit_btn">EDIT</string>
