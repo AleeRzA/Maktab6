@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".controller.RegisterFragment">
+    android:layout_height="wrap_content">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="fill"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingRight="36dp"
+        android:paddingLeft="36dp"
+        tools:context=".controller.RegisterFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/txtLogin_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_nameTxt"
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
+
+        <EditText
+            android:id="@+id/txtLogin_name_edit"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bottom_curv_gray"
+            android:drawableLeft="@drawable/ic_login_name"
+            android:drawablePadding="16dp"
+            android:hint="@string/login_nameTxtHint"
+            android:inputType="textPersonName"
+            android:textAlignment="viewStart" />
+        <TextView
+            android:id="@+id/txtLogin_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_EmailTxt"
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
+        <EditText
+            android:id="@+id/txtLogin_email_edit"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bottom_curv_gray"
+            android:hint="@string/login_emailTxtHint"
+            android:drawableLeft="@drawable/ic_login_email"
+            android:drawablePadding="16dp"
+            android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/txtLogin_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_passTxt"
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
+        <EditText
+            android:id="@+id/txtLogin_password_edit"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bottom_curv_gray"
+            android:hint="@string/login_passTxtHint"
+            android:drawableLeft="@drawable/ic_login_password"
+            android:drawablePadding="16dp"
+            android:inputType="textPassword" />
+        <TextView
+            android:id="@+id/txtLogin_passwordAgn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login_passTxtAgn"
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
+        <EditText
+            android:id="@+id/txtLogin_passwordAgn_edit"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edittext_bottom_curv_gray"
+            android:hint="@string/login_passTxtHintAgn"
+            android:drawableLeft="@drawable/ic_login_password"
+            android:drawablePadding="16dp"
+            android:inputType="textPassword" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLogin_submitBtn"
+            android:background="@color/colorAccent"
+            android:layout_marginTop="8dp"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:textColor="@android:color/white"
+            android:text="@string/submit_button"
+            android:layout_gravity="right"/>
+    </LinearLayout>
+</ScrollView>

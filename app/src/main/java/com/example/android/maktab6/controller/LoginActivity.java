@@ -8,6 +8,8 @@ import com.example.android.maktab6.R;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static final String LOGIN_FRAGMENT = "LoginFragment";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         if(fragmentManager.findFragmentById(R.id.editTask_login_container) == null){
             fragmentManager.beginTransaction()
-                    .add(R.id.editTask_login_container, fragment)
+                    .add(R.id.editTask_login_container, fragment, LOGIN_FRAGMENT)
                     .commit();
         }
     }

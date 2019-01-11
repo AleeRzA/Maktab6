@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Maktab6</string>
+    <string name="app_name">Maktab7</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -22,4 +22,14 @@
     <string name="btn_login">LOGIN</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_guest">GUEST</string>
+
+    <string name="login_nameTxt">Please Enter Your Name:</string>
+    <string name="login_nameTxtHint">Enter Your Name</string>
+    <string name="login_EmailTxt">Email Address:</string>
+    <string name="login_emailTxtHint">Enter Your E-mail Address</string>
+    <string name="login_passTxt">Password:</string>
+    <string name="login_passTxtAgn">Confirm Password:</string>
+    <string name="login_passTxtHint">Enter Your Password</string>
+    <string name="login_passTxtHintAgn">Confirm Your Password</string>
+    <string name="submit_button">SUBMIT</string>
 </resources>

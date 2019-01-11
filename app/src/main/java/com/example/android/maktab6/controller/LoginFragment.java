@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 
@@ -92,7 +91,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Toast.makeText(getActivity(), view.getTooltipText(), Toast.LENGTH_SHORT).show();
+
         switch (view.getId()){
             case R.id.loginBtn_login:
 //                if()
@@ -104,19 +103,20 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         .create().show();
                 break;
 
-            case R.id.loginBtn_register:
-                RegisterFragment registerFragment = RegisterFragment.newInstance();
+            case R.id.loginBtn_guest:
 
-                getActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.editTask_login_container, RegisterFragment.newInstance())
-                                .commit();
+                Intent intent = ViewPagerActivity.newIntent(getActivity());
+                startActivity(intent);
+                getActivity().finish();
                 break;
 
-                default:
-                    Intent intent = ViewPagerActivity.newIntent(getActivity());
-                    startActivity(intent);
-                    getActivity().finish();
+            default:
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.editTask_login_container, RegisterFragment.newInstance())
+                        .addToBackStack(LoginActivity.LOGIN_FRAGMENT)
+                        .commit();
 
         }
     }

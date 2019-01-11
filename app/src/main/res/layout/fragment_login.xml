@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:layout_weight="1"
             android:background="@drawable/edittext_top_curv_gray"
-            android:hint="Email"
+            android:hint="@string/login_emailTxtHint"
             android:inputType="textEmailAddress" />
 
         <EditText
@@ -52,7 +52,7 @@
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:background="@drawable/edittext_bottom_curv_gray"
-            android:hint="Password"
+            android:hint="@string/login_passTxtHint"
             android:inputType="textPassword" />
     </LinearLayout>
 
