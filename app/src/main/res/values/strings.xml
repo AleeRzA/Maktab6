@@ -13,9 +13,12 @@
     <string name="task_saved_message">Task Successfully Saved</string>
 
     <string name="login_alertDlg">WRONG ENTRY!</string>
-    <string name="title">Title</string>
-    <string name="description">Description</string>
+    <string name="title">Title:</string>
+    <string name="description">Description:</string>
+    <string name="titleHint">Your Title</string>
+    <string name="descriptionHint">Your Description</string>
     <string name="edit_btn">EDIT</string>
+    <string name="cancel_btn">CANCEL</string>
     <string name="OK_btn">BACK</string>
     <string name="delete_all">DELETE ALL</string>
 
@@ -32,4 +35,5 @@
     <string name="login_passTxtHint">Enter Your Password</string>
     <string name="login_passTxtHintAgn">Confirm Your Password</string>
     <string name="submit_button">SUBMIT</string>
+
 </resources>

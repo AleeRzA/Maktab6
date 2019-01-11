@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="1000dp"
+    android:minHeight="450dp"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".controller.EditTaskFragment">

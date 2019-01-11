@@ -36,8 +36,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     private EditText mEditDescription;
     private TextView mRealDate;
     private TextView mRealTime;
-    private Button mEditDateBtn;
-    private Button mEditTimeBtn;
+    private TextView mEditDateBtn;
+    private TextView mEditTimeBtn;
+    private Button mSubmit;
+    private TextView mCancel;
+
     private Task mTask;
 
     public RealEditTaskFragment() {
@@ -71,7 +74,8 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         mRealTime = view.findViewById(R.id.realFragTime_time);
         mEditDateBtn = view.findViewById(R.id.realFragDate_btn_edit);
         mEditTimeBtn = view.findViewById(R.id.realFragTime_btn_edit);
-
+        mSubmit = view.findViewById(R.id.realFragDate_submitBtn);
+        mCancel = view.findViewById(R.id.realFragTime_btn_cancel);
 
         mEditTitle.setText(mTask.getTitle());
         mEditDescription.setText(mTask.getDescription());
@@ -80,6 +84,8 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
         mEditDateBtn.setOnClickListener(this);
         mEditTimeBtn.setOnClickListener(this);
+        mSubmit.setOnClickListener(this);
+        mCancel.setOnClickListener(this);
         return view;
     }
 
@@ -96,6 +102,9 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             DateTimeFragment dateTimeFragment = DateTimeFragment.newInstance(mTask.getDate());
             dateTimeFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_TIME);
             dateTimeFragment.show(getFragmentManager(), TAG_TIME_PICKER);
+        }
+        if(view.getId() == R.id.realFragTime_btn_cancel){
+            dismiss();
         }
     }
 }
