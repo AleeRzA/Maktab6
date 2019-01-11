@@ -4,32 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#94d2f9"
     tools:context=".controller.LoginFragment">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="393dp"
+        android:layout_height="168dp"
+        android:layout_marginTop="52dp"
+        android:src="@drawable/pngkey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
+        android:id="@+id/edtTxtUserEmail"
+        style="@style/EditTextStyle"
+        android:layout_width="308dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/edittext_top_curv_gray"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <EditText
+        android:id="@+id/edtTxtUserPassword"
+        style="@style/EditTextStyle"
+        android:layout_width="306dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/edittext_bottom_curv_gray"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtTxtUserEmail"
+        app:layout_constraintVertical_bias="0.0" />
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <LinearLayout
+        android:id="@+id/linearLayout"
+        style="@style/TextAppearance.AppCompat.Button"
         android:layout_width="311dp"
         android:layout_height="141dp"
         android:layout_margin="16dp"
-        style="@style/TextAppearance.AppCompat.Button"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            style="@style/TextAppearance.AppCompat.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_login"
             android:backgroundTint="@color/colorAccent"
-            style="@style/TextAppearance.AppCompat.Button"
+            android:text="@string/btn_login"
 
-            android:textColor="#fff"/>
+            android:textColor="#fff" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,8 +80,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/btn_guest"
-                android:backgroundTint="#646464"/>
+                android:backgroundTint="#646464"
+                android:text="@string/btn_guest" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
