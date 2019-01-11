@@ -105,6 +105,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.loginBtn_register:
+                RegisterFragment registerFragment = RegisterFragment.newInstance();
+
+                getActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.editTask_login_container, RegisterFragment.newInstance())
+                                .commit();
                 break;
 
                 default:
