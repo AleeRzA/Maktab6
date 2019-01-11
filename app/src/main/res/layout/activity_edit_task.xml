@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/editTask_container"
+    android:id="@+id/editTask_login_container"
     tools:context=".controller.EditTaskActivity">
 
 

@@ -20,7 +20,9 @@
             android:name=".controller.TaskCreationActivity"
             android:label="@string/label_create" />
         <activity android:name=".controller.EditTaskActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".controller.LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>

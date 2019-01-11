@@ -28,9 +28,9 @@ public class EditTaskActivity extends AppCompatActivity {
         EditTaskFragment fragment = EditTaskFragment.newInstance(taskId);
         FragmentManager fragmentManager = getSupportFragmentManager();
 
-        if(fragmentManager.findFragmentById(R.id.editTask_container) == null){
+        if(fragmentManager.findFragmentById(R.id.editTask_login_container) == null){
             fragmentManager.beginTransaction()
-                    .add(R.id.editTask_container, fragment)
+                    .add(R.id.editTask_login_container, fragment)
                     .commit();
         }
     }
