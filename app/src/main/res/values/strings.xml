@@ -15,6 +15,7 @@
     <string name="login_alertDlg">WRONG ENTRY!</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
+    <string name="date">DATE:</string>
     <string name="titleHint">Your Title</string>
     <string name="descriptionHint">Your Description</string>
     <string name="edit_btn">EDIT</string>
