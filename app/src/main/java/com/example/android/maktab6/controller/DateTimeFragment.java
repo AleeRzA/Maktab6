@@ -2,12 +2,20 @@ package com.example.android.maktab6.controller;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.widget.DatePicker;
+import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TimePicker;
+
+import com.example.android.maktab6.R;
 
 import java.util.Date;
 
@@ -18,9 +26,12 @@ public class DateTimeFragment extends DialogFragment {
 
     private TabLayout mTabDateTime;
     private TabLayout mTabTime;
-    private DatePicker mDatePicker;
+    private DatePickerFragment mDatePickerFragment;
     private TimePicker mTimePicker;
     private Date mDate;
+    private Button mOkButton;
+    private Button mCancelButton;
+    private FrameLayout mFrameLayout;
 
     private static final String TASK_DATE = "task_date";
 
@@ -40,51 +51,31 @@ public class DateTimeFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDate = (Date) getArguments().getSerializable(TASK_DATE);
+        mDatePickerFragment = DatePickerFragment.newInstance(mDate);
+        FragmentManager fragmentManager = getFragmentManager();
+        if(fragmentManager.findFragmentById(R.id.dateTimePicker_container) == null){
+            fragmentManager.beginTransaction()
+                    .add(R.id.dateTimePicker_container, mDatePickerFragment)
+                    .commit();
+        }
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_date_time, container, false);
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_time, null, false);
+//        mTabDateTime.addTab(mTabTime.newTab().setText(mDate.toString()), 0, true);
 //        mTabDateTime = view.findViewById(R.id.tabLayout_dateTime);
-//        mTabDateTime.addTab(mTabDateTime.newTab()
-//                .setText(new SimpleDateFormat("yyyy-MMM-dd").format(mDate)));
-//        mTabDateTime.addTab(mTabDateTime.newTab()
-//                .setText(new SimpleDateFormat("hh:mm a").format(mDate)));
-////        mTimePicker = view.findViewById(R.id.time_timePicker);
-////        mDatePicker = view.findViewById(R.id.date_datePicker);
-//
-//
-//        mTabDateTime.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                if(mTabDateTime.getSelectedTabPosition() == 0)
-//                    mTimePicker.setVisibility(View.GONE);
-//
-//                if(mTabDateTime.getSelectedTabPosition() == 1)
-//                    mDatePicker.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//
-//            }
-//        });
-//        Calendar calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        int hour = calendar.get(Calendar.HOUR);
-//        int minute = calendar.get(Calendar.MINUTE);
-//
-//        mDatePicker.init(year, month, day, null);
-//
-//
-//        return view;
-//    }
+        mFrameLayout = view.findViewById(R.id.dateTimePicker_container);
+        mOkButton = view.findViewById(R.id.btn_dateTime_ok);
+        mCancelButton = view.findViewById(R.id.btn_dateTime_cancel);
+
+        mFrameLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+
+            }
+        });
+        return view;
+    }
 }
