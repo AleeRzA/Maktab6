@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
+import com.example.android.maktab6.model.TaskRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.UUID;
@@ -62,7 +62,7 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUUID = (UUID) getArguments().getSerializable(TASK_ID);
-        mTask = TaskRepo.getInstance().getTaskById(mUUID);
+        mTask = TaskRepository.getInstance().getTaskById(mUUID);
 
         getActivity().setTitle(mTask.getTitle());
     }
@@ -114,7 +114,7 @@ public class EditTaskFragment extends DialogFragment {
 //            @Override
 //            public void onClick(View view) {
 //                Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
-//                TaskRepo.getInstance().removeTask(mTask.getId());
+//                TaskRepository.getInstance().removeTask(mTask.getId());
 //                getActivity().onBackPressed();
 //            }
 //        });
@@ -123,7 +123,7 @@ public class EditTaskFragment extends DialogFragment {
 //            public void onClick(View view) {
 //                Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
 //                    mTask.setDone(true);
-//                    TaskRepo.getInstance().setDoneChecker(true);
+//                    TaskRepository.getInstance().setDoneChecker(true);
 //                getActivity().onBackPressed();
 //            }
 //        });

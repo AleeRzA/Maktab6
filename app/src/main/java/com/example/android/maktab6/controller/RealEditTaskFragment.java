@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
+import com.example.android.maktab6.model.TaskRepository;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -74,7 +74,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         super.onCreate(savedInstanceState);
         if(getArguments().getSerializable(TASK_ID_EDIT) != null) {
             mUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
-            mTask = TaskRepo.getInstance().getTaskById(mUUID);
+            mTask = TaskRepository.getInstance().getTaskById(mUUID);
         } else {
             mTask = new Task();
         }
@@ -161,7 +161,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             if(mTask.getId() == mUUID){
                 //database update
             }else {
-                TaskRepo.getInstance().addToList(mTask);
+                TaskRepository.getInstance().addToList(mTask);
 
                 dismiss();
             }

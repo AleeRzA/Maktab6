@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
+import com.example.android.maktab6.model.TaskRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,13 +56,13 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TaskRepo repository = TaskRepo.getInstance();
+        TaskRepository repository = TaskRepository.getInstance();
         int viewId = getArguments().getInt(ARGS_TAK_ID);
         viewChecker(repository, viewId);
         setHasOptionsMenu(true);
     }
 
-    private void viewChecker(TaskRepo repository, int viewId) {
+    private void viewChecker(TaskRepository repository, int viewId) {
         if(viewId == 0){
             mTaskLists = repository.getTasks();
         }

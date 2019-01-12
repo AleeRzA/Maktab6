@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TaskRepo {
-    private static TaskRepo instance;
+public class TaskRepository {
+    private static TaskRepository instance;
     private List<Task> mTasks;
     private boolean mDoneChecker;
 
-    private TaskRepo(){
+    private TaskRepository(){
         mTasks = new ArrayList<>();
     }
 
-    public static TaskRepo getInstance(){
+    public static TaskRepository getInstance(){
         if(instance == null)
-            instance = new TaskRepo();
+            instance = new TaskRepository();
         return instance;
     }
     public List<Task> addToList(Task task){

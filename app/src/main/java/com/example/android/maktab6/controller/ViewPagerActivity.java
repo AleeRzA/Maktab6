@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
+import com.example.android.maktab6.model.TaskRepository;
 
 import java.util.List;
 
@@ -89,7 +89,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mTasks = TaskRepo.getInstance().getTasks();
+        mTasks = TaskRepository.getInstance().getTasks();
         if(!mTasks.isEmpty()){
             mAdapter.notifyDataSetChanged();
         }

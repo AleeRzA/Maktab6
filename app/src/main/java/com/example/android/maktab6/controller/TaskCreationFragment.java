@@ -14,7 +14,7 @@ import android.widget.EditText;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepo;
+import com.example.android.maktab6.model.TaskRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +32,7 @@ public class TaskCreationFragment extends Fragment {
     private List<Task> mTaskList;
     private UUID mTaskId;
     private Task mTask;
-    private TaskRepo mRepository;
+    private TaskRepository mRepository;
     private boolean isNew = false;
 
     public TaskCreationFragment() {
@@ -53,7 +53,7 @@ public class TaskCreationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRepository = TaskRepo.getInstance();
+        mRepository = TaskRepository.getInstance();
         mTaskList = mRepository.getTasks();
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey(TASK_ID)) {
