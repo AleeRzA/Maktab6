@@ -117,7 +117,7 @@ public class TaskCreationFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isNew) {
-                    mRepository.addToList(mTask);
+                    mRepository.addTaskToList(mTask);
                 }
 
                 pressBack();

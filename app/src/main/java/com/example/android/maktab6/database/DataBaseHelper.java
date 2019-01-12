@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         + ")");
 
         sqLiteDatabase.execSQL("create table " + DBSchema.UserTable.NAME + "(" +
-            "user_id integer primary key autoincrement, " +
+                "user_id integer primary key autoincrement, " +
                 DBSchema.UserTable.UserColumns.UUID + ", " +
                 DBSchema.UserTable.UserColumns.NAME + ", " +
                 DBSchema.UserTable.UserColumns.EMAIL + ", " +

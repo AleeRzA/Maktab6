@@ -74,7 +74,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         super.onCreate(savedInstanceState);
         if(getArguments().getSerializable(TASK_ID_EDIT) != null) {
             mUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
-            mTask = TaskRepository.getInstance().getTaskById(mUUID);
+            mTask = TaskRepository.getInstance(getActivity()).getTaskById(mUUID);
         } else {
             mTask = new Task();
         }
@@ -161,7 +161,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             if(mTask.getId() == mUUID){
                 //database update
             }else {
-                TaskRepository.getInstance().addToList(mTask);
+                TaskRepository.getInstance(getActivity()).addTaskToList(mTask);
 
                 dismiss();
             }
