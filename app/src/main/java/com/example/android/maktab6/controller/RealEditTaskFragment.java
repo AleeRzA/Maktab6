@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
@@ -151,10 +150,9 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             datePickerFragment.show(getFragmentManager(), TAG_DATE_PICKER);
         }
         if(view.getId() == R.id.realFragTime_btn_edit){
-            Toast.makeText(getActivity(), "time", Toast.LENGTH_SHORT).show();
-            DateTimeFragment dateTimeFragment = DateTimeFragment.newInstance(mTask.getDate());
-            dateTimeFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_TIME);
-            dateTimeFragment.show(getFragmentManager(), TAG_TIME_PICKER);
+            TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getDate());
+            timePickerFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_TIME);
+            timePickerFragment.show(getFragmentManager(), TAG_TIME_PICKER);
         }
         if(view.getId() == R.id.realFragTime_btn_cancel){
             dismiss();
@@ -181,6 +179,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.getPickedDate());
             mTask.setDate(date);
             mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(date));
+        }
+        if(requestCode == REQUEST_CODE_TIME){
+            Date date = (Date) data.getSerializableExtra(TimePickerFragment.getPickedTime());
+            mTask.setDate(date);
+            mRealTime.setText(new SimpleDateFormat("hh:mm a").format(date));
         }
     }
 }
