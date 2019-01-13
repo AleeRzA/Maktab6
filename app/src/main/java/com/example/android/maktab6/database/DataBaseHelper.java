@@ -11,26 +11,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table " + DBSchema.TaskTable.NAME + "(" +
-            "_id integer primary key autoincrement, " +
+        sqLiteDatabase.execSQL(
+            "create table " + DBSchema.TaskTable.NAME + "(" +
+            "_id INTEGER primary key autoincrement, " +
             DBSchema.TaskTable.TaskColumns.UUID + ", " +
             DBSchema.TaskTable.TaskColumns.TITLE + ", " +
             DBSchema.TaskTable.TaskColumns.DESCRIPTION + ", " +
             DBSchema.TaskTable.TaskColumns.DATE + ", " +
-            DBSchema.TaskTable.TaskColumns.DONE + ", " +
-                "foreign key " + "(" +
-            DBSchema.TaskTable.TaskColumns.USER_ID + ")" +
-                "references " + DBSchema.UserTable.NAME + "("
-                + "user_id )"
-        + ")");
+            DBSchema.TaskTable.TaskColumns.DONE + ", "
+              +     "foreign key" + "(" +
+                    DBSchema.TaskTable.TaskColumns.USER_ID + ")" +
+                    " references " + DBSchema.UserTable.NAME + "("
+                    + "user_id" + ")" +
+                ")"
+        );
 
         sqLiteDatabase.execSQL("create table " + DBSchema.UserTable.NAME + "(" +
-                "user_id integer primary key autoincrement, " +
+                "user_id INTEGER primary key autoincrement, " +
                 DBSchema.UserTable.UserColumns.UUID + ", " +
                 DBSchema.UserTable.UserColumns.NAME + ", " +
                 DBSchema.UserTable.UserColumns.EMAIL + ", " +
-                DBSchema.UserTable.UserColumns.PASSWORD + ")"
-        );
+                DBSchema.UserTable.UserColumns.PASSWORD + ")");
     }
 
     @Override

@@ -109,6 +109,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         switch (view.getId()){
             case R.id.loginBtn_login:
+                if(_userName == null || _passWord == null){
+                    return;
+                }
                 mUser = mTaskRepository.validateUser(_userName, _passWord);
                 if(mUser != null){
                     UUID userId = mUser.getId();
@@ -116,7 +119,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     startActivity(intent);
                     getActivity().finish();
                 } else {
-
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.login_alertDlg)
                             .setIcon(R.drawable.ic_error_alert)
@@ -126,20 +128,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.loginBtn_guest:
-
                 Intent intent = ViewPagerActivity.newIntent(getActivity(), null);
                 startActivity(intent);
                 getActivity().finish();
                 break;
 
             default:
-
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.editTask_login_container, RegisterFragment.newInstance())
                         .addToBackStack(LoginActivity.LOGIN_FRAGMENT)
                         .commit();
-
         }
     }
 }

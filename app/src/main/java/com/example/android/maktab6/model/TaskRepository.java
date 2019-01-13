@@ -58,8 +58,9 @@ public class TaskRepository {
                 null,
                 null,
                 null);
-        return new TaskCursorWrapper(taskCursor);
+        return new TaskCursorWrapper(taskCursor, mContext);
     }
+
     public UserCursorWrapper queryUser(String where, String[] whereClause){
         Cursor cursor = mDatabase.query(
                 DBSchema.UserTable.NAME,
@@ -186,5 +187,25 @@ public class TaskRepository {
                 getTaskContentValues(task),
                 DBSchema.TaskTable.TaskColumns.UUID + " = ? ",
                 new String[]{task.getId().toString()});
+    }
+    public User getUserByTask(int taskUseID){
+        Cursor cursor = mDatabase.query(DBSchema.UserTable.NAME +
+                        " inner join " + DBSchema.TaskTable.NAME + " on " +
+                        "user_id = " + taskUseID,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        UserCursorWrapper userCursorWrapper = new UserCursorWrapper(cursor);
+        try {
+            if(userCursorWrapper.getCount() == 0)
+                return null;
+            userCursorWrapper.moveToFirst();
+            return userCursorWrapper.getUser();
+        }finally {
+            userCursorWrapper.close();
+        }
     }
 }

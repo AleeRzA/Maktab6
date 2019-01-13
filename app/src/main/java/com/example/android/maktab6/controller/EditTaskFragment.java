@@ -16,9 +16,13 @@ import android.widget.TextView;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.UUID;
+
+;
+
 
 
 /**
@@ -28,7 +32,7 @@ public class EditTaskFragment extends DialogFragment {
 
 
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
-    private static final int REQUEST_CODE = 1;
+    private static final String USER_ID = "com.example.android.maktab6.userId";
     private static final String REAL_EDIT_TASK = "real_edit_task";
 
 
@@ -40,19 +44,18 @@ public class EditTaskFragment extends DialogFragment {
     private Button mEditButton;
     private Button mOkButton;
     private UUID mUUID;
-
-    private TextView mDeleteBtn;
-    private TextView mEditBtn;
-    private TextView mDoneBtn;
+    private User mUser;
+    private UUID mUserUUID;
 
     public EditTaskFragment() {
         // Required empty public constructor
     }
 
-    public static EditTaskFragment newInstance(UUID taskId) {
-        
+
+    public static EditTaskFragment newInstance(UUID taskId, UUID userId) {
         Bundle args = new Bundle();
         args.putSerializable(TASK_ID, taskId);
+        args.putSerializable(USER_ID, userId);
         EditTaskFragment fragment = new EditTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -62,8 +65,9 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUUID = (UUID) getArguments().getSerializable(TASK_ID);
-        mTask = TaskRepository.getInstance().getTaskById(mUUID);
-
+        mTask = TaskRepository.getInstance(getActivity()).getTaskById(mUUID);
+        mUserUUID = (UUID) getArguments().getSerializable(USER_ID);
+        mUser = TaskRepository.getInstance(getActivity()).getUserById(mUserUUID);
         getActivity().setTitle(mTask.getTitle());
     }
 
@@ -92,8 +96,7 @@ public class EditTaskFragment extends DialogFragment {
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(mUUID);
-                realEditTaskFragment.setTargetFragment(EditTaskFragment.this, REQUEST_CODE);
+                RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(mUUID, mUserUUID);
                 realEditTaskFragment.show(getFragmentManager(), REAL_EDIT_TASK);
             }
         });
@@ -105,35 +108,6 @@ public class EditTaskFragment extends DialogFragment {
         });
         return view;
 
-
-//        mDeleteBtn = view.findViewById(R.id.editFrag_deleteBtn);
-//        mEditBtn = view.findViewById(R.id.editFrag_editBtn);
-//        mDoneBtn = view.findViewById(R.id.editFrag_doneBtn);
-//
-//        mDeleteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Hi there", Toast.LENGTH_LONG).show();
-//                TaskRepository.getInstance().removeTask(mTask.getId());
-//                getActivity().onBackPressed();
-//            }
-//        });
-//        mDoneBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getActivity(), "Task is done.", Toast.LENGTH_SHORT).show();
-//                    mTask.setDone(true);
-//                    TaskRepository.getInstance().setDoneChecker(true);
-//                getActivity().onBackPressed();
-//            }
-//        });
-//        mEditBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            Intent intent = TaskCreationActivity.newIntent(getActivity(),mTask.getId());
-//            startActivity(intent);
-//            }
-//        });
     }
 
 }

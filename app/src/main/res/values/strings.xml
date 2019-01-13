@@ -13,6 +13,7 @@
     <string name="task_saved_message">Task Successfully Saved</string>
 
     <string name="login_alertDlg">WRONG ENTRY!</string>
+    <string name="confirmPass_alertDlg">CHECK YOUR PASSWORD</string>
     <string name="title">Title:</string>
     <string name="description">Description:</string>
     <string name="date">DATE:</string>

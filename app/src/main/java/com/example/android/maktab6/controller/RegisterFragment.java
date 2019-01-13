@@ -2,6 +2,7 @@ package com.example.android.maktab6.controller;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -134,7 +135,7 @@ public class RegisterFragment extends Fragment  {
             public void onClick(View view) {
                 if(!_password.equals(_confirm)){
                     new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.login_alertDlg)
+                            .setTitle(R.string.confirmPass_alertDlg)
                             .setIcon(R.drawable.ic_error_alert)
                             .setPositiveButton(android.R.string.ok, null)
                             .create().show();
@@ -143,6 +144,9 @@ public class RegisterFragment extends Fragment  {
                     mUser.setUserName(_email);
                     mUser.setPassword(_password);
                     TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+                    Intent intent = ViewPagerActivity.newIntent(getActivity(), mUser.getId());
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });

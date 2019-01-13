@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.model.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -53,7 +54,7 @@ public class TaskCreationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRepository = TaskRepository.getInstance();
+        mRepository = TaskRepository.getInstance(getActivity());
         mTaskList = mRepository.getTasks();
         Bundle arguments = getArguments();
         if (arguments != null && arguments.containsKey(TASK_ID)) {
@@ -62,7 +63,7 @@ public class TaskCreationFragment extends Fragment {
         } else if (savedInstanceState != null)
             return;
         else {
-            mTask = new Task();
+            mTask = new Task(new User());
             mTaskId = mTask.getId();
             isNew = true;
         }

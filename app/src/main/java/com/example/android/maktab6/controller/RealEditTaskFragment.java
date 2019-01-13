@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +31,8 @@ import java.util.UUID;
  */
 public class RealEditTaskFragment extends DialogFragment implements View.OnClickListener {
 
-    private static final String TASK_ID_EDIT = "task_id_edit";
+    private static final String TASK_ID_EDIT = "com.example.android.maktab6.controller.task_id_edit";
+    private static final String USER_ID_EDIT = "com.example.android.maktab6.controller.user_id_edit";
     private static final int REQUEST_CODE_DATE = 10;
     private static final int REQUEST_CODE_TIME = 11;
     private static final String TAG_DATE_PICKER = "date_datePicker";
@@ -46,24 +48,19 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     private TextView mCancel;
 
     private Task mTask;
-    private UUID mUUID;
+    private UUID mTaskUUID;
+    private User mUser;
+    private UUID mUserUUID;
 
     public RealEditTaskFragment() {
         // Required empty public constructor
     }
 
-    public static RealEditTaskFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        RealEditTaskFragment fragment = new RealEditTaskFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-    public static RealEditTaskFragment newInstance(UUID taskId) {
+    public static RealEditTaskFragment newInstance(UUID taskId, UUID userId) {
 
         Bundle args = new Bundle();
         args.putSerializable(TASK_ID_EDIT, taskId);
+        args.putSerializable(USER_ID_EDIT, userId);
         RealEditTaskFragment fragment = new RealEditTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -72,11 +69,14 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUserUUID = (UUID) getArguments().getSerializable(USER_ID_EDIT);
+        mUser = TaskRepository.getInstance(getActivity()).getUserById(mUserUUID);
+
         if(getArguments().getSerializable(TASK_ID_EDIT) != null) {
-            mUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
-            mTask = TaskRepository.getInstance(getActivity()).getTaskById(mUUID);
+            mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
+            mTask = TaskRepository.getInstance(getActivity()).getTaskById(mTaskUUID);
         } else {
-            mTask = new Task();
+            mTask = new Task(mUser);
         }
     }
 
@@ -158,7 +158,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             dismiss();
         }
         if(view.getId() == R.id.realFragDate_submitBtn){
-            if(mTask.getId() == mUUID){
+            if(mTask.getId() == mTaskUUID){
                 //database update
             }else {
                 TaskRepository.getInstance(getActivity()).addTaskToList(mTask);

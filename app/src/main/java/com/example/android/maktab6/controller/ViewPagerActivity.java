@@ -29,6 +29,8 @@ public class ViewPagerActivity extends AppCompatActivity {
     private FloatingActionButton mActionButton;
     private List<Task> mTasks;
     private FragmentStatePagerAdapter mAdapter;
+    private UUID mUserId;
+
 
     public static Intent newIntent(Context context, UUID userID){
         Intent intent = new Intent(context, ViewPagerActivity.class);
@@ -40,6 +42,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mUserId = (UUID) getIntent().getSerializableExtra(USER_ID_LOGGED_IN);
 
         mViewPager = findViewById(R.id.main_view_pager);
         mTabLayout = findViewById(R.id.main_tabLayout);
@@ -52,7 +55,7 @@ public class ViewPagerActivity extends AppCompatActivity {
             @Override
             public Fragment getItem(int position) {
 
-                return TaskListFragment.newInstance(position);
+                return TaskListFragment.newInstance(position, mUserId);
             }
 
             @Override
@@ -84,7 +87,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance();
+                RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(null, mUserId);
                 realEditTaskFragment.show(getSupportFragmentManager(), REAL_TASK_CREATION);
             }
         });

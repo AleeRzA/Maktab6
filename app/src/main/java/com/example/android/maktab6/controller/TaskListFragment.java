@@ -1,6 +1,7 @@
 package com.example.android.maktab6.controller;
 
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,9 +21,11 @@ import android.widget.TextView;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +34,9 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
-    private static final int REQUEST_CODE = 0;
+    public static final String USER_UUID = "com.example.android.maktab6.user_uuid";
     private static final String SHOW_TASK = "show_task";
+
 
     private RecyclerView mRecyclerView;
     private List<Task> mTaskLists;
@@ -40,14 +44,18 @@ public class TaskListFragment extends Fragment {
     private TextView mEmptyText;
     private ImageView mEmptyImage;
     private int _position;
+    private Task mTask;
+    private UUID mUserUUID;
+    private TaskRepository mRepository;
 
     public TaskListFragment() {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance(int viewId) {
+    public static TaskListFragment newInstance(int viewId, UUID userId) {
         Bundle args = new Bundle();
         args.putInt(ARGS_TAK_ID, viewId);
+        args.putSerializable(USER_UUID, userId);
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -56,9 +64,11 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TaskRepository repository = TaskRepository.getInstance(getActivity());
+        mRepository = TaskRepository.getInstance(getActivity());
+        mUserUUID = (UUID) getArguments().getSerializable(USER_UUID);
+
         int viewId = getArguments().getInt(ARGS_TAK_ID);
-        viewChecker(repository, viewId);
+        viewChecker(mRepository, viewId);
         setHasOptionsMenu(true);
     }
 
@@ -104,7 +114,13 @@ public class TaskListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
-        //update sql method...
+        //update sql
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mRepository.update(mTask);
     }
 
     @Override
@@ -116,7 +132,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-            removeAll();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -147,7 +163,7 @@ public class TaskListFragment extends Fragment {
     private class SampleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mTextTitle;
         private TextView mChar;
-        private Task mTask;
+
 
         public SampleHolder(View itemView) {
             super(itemView);
@@ -166,14 +182,9 @@ public class TaskListFragment extends Fragment {
         }
         @Override
         public void onClick(View view) {
-
             _position = getAdapterPosition();
-            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
-            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE);
+            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId(), mUserUUID);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
-
-//            Intent intent = EditTaskActivity.newIntent(getActivity(), mTask.getId());
-//            startActivity(intent);
         }
     }
     //--------------------------------------------------/
