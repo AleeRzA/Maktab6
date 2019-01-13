@@ -56,7 +56,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TaskRepository repository = TaskRepository.getInstance();
+        TaskRepository repository = TaskRepository.getInstance(getActivity());
         int viewId = getArguments().getInt(ARGS_TAK_ID);
         viewChecker(repository, viewId);
         setHasOptionsMenu(true);
@@ -137,7 +137,8 @@ public class TaskListFragment extends Fragment {
             mRecyclerView.setAdapter(mTaskAdapter);
         } else {
             mTaskAdapter.setTasks(mTaskLists);
-            mTaskAdapter.notifyItemChanged(_position);
+            mTaskAdapter.notifyDataSetChanged();
+//            mTaskAdapter.notifyItemChanged(_position);
         }
     }
 

@@ -17,19 +17,22 @@ import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ViewPagerActivity extends AppCompatActivity {
 
     public static final String REAL_TASK_CREATION = "realTaskCreation";
     public static final String TASK_LIST_FRAGMENT = "taskListFragment";
+    public static final String USER_ID_LOGGED_IN = "userId_loggedIn";
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
     private List<Task> mTasks;
     private FragmentStatePagerAdapter mAdapter;
 
-    public static Intent newIntent(Context context){
+    public static Intent newIntent(Context context, UUID userID){
         Intent intent = new Intent(context, ViewPagerActivity.class);
+        intent.putExtra(USER_ID_LOGGED_IN, userID);
         return intent;
     }
 
@@ -48,6 +51,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
+
                 return TaskListFragment.newInstance(position);
             }
 
@@ -89,7 +93,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mTasks = TaskRepository.getInstance().getTasks();
+        mTasks = TaskRepository.getInstance(this).getTasks();
         if(!mTasks.isEmpty()){
             mAdapter.notifyDataSetChanged();
         }

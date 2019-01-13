@@ -50,7 +50,8 @@ public class TaskRepository {
     }
     public TaskCursorWrapper queryTask(String whereClause, String[] whereArgs){
         Cursor taskCursor = mDatabase.query(
-                DBSchema.TaskTable.NAME,
+                DBSchema.TaskTable.NAME + " inner join " + DBSchema.UserTable.NAME + " on " +
+                        DBSchema.TaskTable.TaskColumns.USER_ID + " = user_id",
                 null,
                 whereClause,
                 whereArgs,
@@ -83,8 +84,6 @@ public class TaskRepository {
     }
     public List<Task> getTasks(){
         List<Task> mTasks = new ArrayList<>();
-        String whereClause = DBSchema.TaskTable.TaskColumns.USER_ID + " = ?";
-        String[] whereArgs = new String[]{};
         TaskCursorWrapper cursorWrapper = queryTask(null, null);
         try {
             if(cursorWrapper.getCount() == 0)
@@ -126,21 +125,66 @@ public class TaskRepository {
             userCursorWrapper.close();
         }
     }
-//    public List<Task> getDoneTasks(Task task){
-//        List<Task> mDones = new ArrayList<>();
-//        String whereClause = DBSchema.TaskTable.TaskColumns.DONE + " = ?";
-//        String[] whereArgs = new String[]{task.isDone()}
-//        TaskCursorWrapper taskCursorWrapper = queryTask()
-//        return mDones;
-//    }
-//    public List<Task> getUndones(){
-//        List<Task> undones = new ArrayList<>();
-//        for(Task task:mTasks){
-//            if (isDoneChecker()) {
-//                continue;
-//            }
-//            undones.add(task);
-//        }
-//        return undones;
-//    }
+    public List<Task> getDoneTasks(){
+        List<Task> mDones = new ArrayList<>();
+        String whereClause = DBSchema.TaskTable.TaskColumns.DONE + " = ?";
+        String[] whereArgs = new String[]{"1"};
+        TaskCursorWrapper taskCursorWrapper = queryTask(whereClause, whereArgs);
+        try {
+            if(taskCursorWrapper.getCount() == 0){
+                return mDones;
+            }
+            taskCursorWrapper.moveToFirst();
+            while (!taskCursorWrapper.isAfterLast()){
+                Task doneTask = taskCursorWrapper.getTasks();
+                mDones.add(doneTask);
+                taskCursorWrapper.moveToNext();
+            }
+        }finally {
+            taskCursorWrapper.close();
+        }
+        return mDones;
+    }
+    public List<Task> getUndones(){
+        List<Task> undones = new ArrayList<>();
+        String whereClause = DBSchema.TaskTable.TaskColumns.DONE + " = ?";
+        String[] whereArgs = new String[]{"0"};
+        TaskCursorWrapper taskCursorWrapper = queryTask(whereClause, whereArgs);
+        try {
+            if(taskCursorWrapper.getCount() == 0){
+                return undones;
+            }
+            taskCursorWrapper.moveToFirst();
+            while (!taskCursorWrapper.isAfterLast()){
+                Task doneTask = taskCursorWrapper.getTasks();
+                undones.add(doneTask);
+                taskCursorWrapper.moveToNext();
+            }
+        }finally {
+            taskCursorWrapper.close();
+        }
+        return undones;
+    }
+    public User validateUser(String username, String password){
+        String whereClause = DBSchema.UserTable.UserColumns.EMAIL + " = ? " + "AND " +
+                DBSchema.UserTable.UserColumns.PASSWORD + " = ?";
+        String[] whereArgs = new String[]{username, password};
+        UserCursorWrapper userCursorWrapper = queryUser(whereClause, whereArgs);
+        try {
+            if(userCursorWrapper.getCount() == 0){
+                return null;
+            }
+            userCursorWrapper.moveToFirst();
+            return userCursorWrapper.getUser();
+        }finally {
+            userCursorWrapper.close();
+        }
+    }
+    public void update(Task task){
+        mDatabase.update(
+                DBSchema.TaskTable.NAME,
+                getTaskContentValues(task),
+                DBSchema.TaskTable.TaskColumns.UUID + " = ? ",
+                new String[]{task.getId().toString()});
+    }
 }

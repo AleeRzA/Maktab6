@@ -1,7 +1,9 @@
 package com.example.android.maktab6.controller;
 
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +28,12 @@ public class RegisterFragment extends Fragment  {
     private EditText mConfirm;
     private Button mSubmitBtn;
 
+    private User mUser;
+    private String _name;
+    private String _email;
+    private String _password;
+    private String _confirm;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -35,6 +45,12 @@ public class RegisterFragment extends Fragment  {
         RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mUser = new User();
     }
 
     @Override
@@ -56,7 +72,7 @@ public class RegisterFragment extends Fragment  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                _name = charSequence.toString();
             }
 
             @Override
@@ -72,7 +88,7 @@ public class RegisterFragment extends Fragment  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                _email =charSequence.toString();
             }
 
             @Override
@@ -88,7 +104,7 @@ public class RegisterFragment extends Fragment  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                _password = charSequence.toString();
             }
 
             @Override
@@ -104,7 +120,7 @@ public class RegisterFragment extends Fragment  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                _confirm = charSequence.toString();
             }
 
             @Override
@@ -116,7 +132,18 @@ public class RegisterFragment extends Fragment  {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(!_password.equals(_confirm)){
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.login_alertDlg)
+                            .setIcon(R.drawable.ic_error_alert)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .create().show();
+                }else {
+                    mUser.setName(_name);
+                    mUser.setUserName(_email);
+                    mUser.setPassword(_password);
+                    TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+                }
             }
         });
         return view;
