@@ -1,7 +1,6 @@
 package com.example.android.maktab6.controller;
 
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
-import com.example.android.maktab6.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class TaskListFragment extends Fragment {
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
     public static final String USER_UUID = "com.example.android.maktab6.user_uuid";
     private static final String SHOW_TASK = "show_task";
+    private static final int REQUEST_CODE_TASKLIST = 31;
 
 
     private RecyclerView mRecyclerView;
@@ -47,6 +46,7 @@ public class TaskListFragment extends Fragment {
     private Task mTask;
     private UUID mUserUUID;
     private TaskRepository mRepository;
+    private int _viewId;
 
     public TaskListFragment() {
         // Required empty public constructor
@@ -67,8 +67,8 @@ public class TaskListFragment extends Fragment {
         mRepository = TaskRepository.getInstance(getActivity());
         mUserUUID = (UUID) getArguments().getSerializable(USER_UUID);
 
-        int viewId = getArguments().getInt(ARGS_TAK_ID);
-        viewChecker(mRepository, viewId);
+        _viewId = getArguments().getInt(ARGS_TAK_ID);
+        viewChecker(mRepository, _viewId);
         setHasOptionsMenu(true);
     }
 
@@ -114,13 +114,12 @@ public class TaskListFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updateUI();
-        //update sql
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mRepository.update(mTask);
     }
 
     @Override
@@ -132,7 +131,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-
+            updateUI();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -147,7 +146,8 @@ public class TaskListFragment extends Fragment {
 
 
     private void updateUI() {
-
+        mRepository = TaskRepository.getInstance(getActivity());
+        viewChecker(mRepository, _viewId);
         if(mTaskAdapter == null) {
             mTaskAdapter = new TaskAdapter(mTaskLists);
             mRecyclerView.setAdapter(mTaskAdapter);
@@ -184,6 +184,7 @@ public class TaskListFragment extends Fragment {
         public void onClick(View view) {
             _position = getAdapterPosition();
             EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId(), mUserUUID);
+            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASKLIST);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
         }
     }

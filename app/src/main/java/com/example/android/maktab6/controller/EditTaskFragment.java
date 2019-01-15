@@ -1,6 +1,5 @@
 package com.example.android.maktab6.controller;
 
-
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,10 +20,6 @@ import com.example.android.maktab6.model.User;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-;
-
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -34,6 +29,7 @@ public class EditTaskFragment extends DialogFragment {
     private static final String TASK_ID = "com.example.android.maktab6.taskId";
     private static final String USER_ID = "com.example.android.maktab6.userId";
     private static final String REAL_EDIT_TASK = "real_edit_task";
+    public static final int REQUEST_CODE_EDITTASK = 33;
 
 
     private Task mTask;
@@ -97,6 +93,7 @@ public class EditTaskFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(mUUID, mUserUUID);
+                setTargetFragment(EditTaskFragment.this, REQUEST_CODE_EDITTASK);
                 realEditTaskFragment.show(getFragmentManager(), REAL_EDIT_TASK);
             }
         });

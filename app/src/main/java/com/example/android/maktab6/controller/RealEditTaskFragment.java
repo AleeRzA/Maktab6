@@ -51,6 +51,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     private UUID mTaskUUID;
     private User mUser;
     private UUID mUserUUID;
+    private TaskRepository mTaskRepository;
 
     public RealEditTaskFragment() {
         // Required empty public constructor
@@ -70,7 +71,8 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mUserUUID = (UUID) getArguments().getSerializable(USER_ID_EDIT);
-        mUser = TaskRepository.getInstance(getActivity()).getUserById(mUserUUID);
+        mTaskRepository = TaskRepository.getInstance(getActivity());
+        mUser = mTaskRepository.getUserById(mUserUUID);
 
         if(getArguments().getSerializable(TASK_ID_EDIT) != null) {
             mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
@@ -143,6 +145,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
     public void onClick(View view) {
         if(view.getId() == R.id.realFragDate_btn_edit){
             DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
@@ -159,10 +166,9 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         }
         if(view.getId() == R.id.realFragDate_submitBtn){
             if(mTask.getId() == mTaskUUID){
-                //database update
+                mTaskRepository.update(mTask);
             }else {
                 TaskRepository.getInstance(getActivity()).addTaskToList(mTask);
-
                 dismiss();
             }
         }

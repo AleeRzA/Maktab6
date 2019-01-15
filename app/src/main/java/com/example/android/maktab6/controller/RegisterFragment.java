@@ -21,7 +21,7 @@ import com.example.android.maktab6.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment  {
+public class RegisterFragment extends Fragment {
 
     private EditText mName;
     private EditText mEmail;
@@ -89,7 +89,7 @@ public class RegisterFragment extends Fragment  {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _email =charSequence.toString();
+                _email = charSequence.toString();
             }
 
             @Override
@@ -133,13 +133,13 @@ public class RegisterFragment extends Fragment  {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!_password.equals(_confirm)){
+                if (!_password.equals(_confirm)) {
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.confirmPass_alertDlg)
                             .setIcon(R.drawable.ic_error_alert)
                             .setPositiveButton(android.R.string.ok, null)
                             .create().show();
-                }else {
+                } else {
                     mUser.setName(_name);
                     mUser.setUserName(_email);
                     mUser.setPassword(_password);
@@ -153,4 +153,24 @@ public class RegisterFragment extends Fragment  {
         return view;
     }
 
+//    public void addTextChangeListener(EditText editText, final int id) {
+//        editText.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                switch (id) {
+//                        case
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//            }
+//        });
+//    }
 }
