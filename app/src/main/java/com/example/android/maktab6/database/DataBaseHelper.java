@@ -11,6 +11,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("create table " + DBSchema.UserTable.NAME + "(" +
+                "user_id INTEGER primary key autoincrement, " +
+                DBSchema.UserTable.UserColumns.UUID + ", " +
+                DBSchema.UserTable.UserColumns.NAME + ", " +
+                DBSchema.UserTable.UserColumns.EMAIL + ", " +
+                DBSchema.UserTable.UserColumns.PASSWORD + ")");
+
+
         sqLiteDatabase.execSQL(
             "create table " + DBSchema.TaskTable.NAME + "(" +
             "_id INTEGER primary key autoincrement, " +
@@ -27,12 +35,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 ")"
         );
 
-        sqLiteDatabase.execSQL("create table " + DBSchema.UserTable.NAME + "(" +
-                "user_id INTEGER primary key autoincrement, " +
-                DBSchema.UserTable.UserColumns.UUID + ", " +
-                DBSchema.UserTable.UserColumns.NAME + ", " +
-                DBSchema.UserTable.UserColumns.EMAIL + ", " +
-                DBSchema.UserTable.UserColumns.PASSWORD + ")");
+
     }
 
     @Override

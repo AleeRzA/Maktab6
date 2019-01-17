@@ -13,9 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
-import com.example.android.maktab6.model.User;
 
 import java.util.List;
 import java.util.UUID;
@@ -63,7 +63,7 @@ public class TaskCreationFragment extends Fragment {
         } else if (savedInstanceState != null)
             return;
         else {
-            mTask = new Task(new User());
+            mTask = new Task(LoginUser.userLogin);
             mTaskId = mTask.getId();
             isNew = true;
         }

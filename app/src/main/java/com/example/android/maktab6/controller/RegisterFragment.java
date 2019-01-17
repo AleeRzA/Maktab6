@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.TaskRepository;
 import com.example.android.maktab6.model.User;
 
@@ -143,7 +144,8 @@ public class RegisterFragment extends Fragment {
                     mUser.setName(_name);
                     mUser.setUserName(_email);
                     mUser.setPassword(_password);
-                    TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+                    long userid = TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+                    LoginUser.userLogin = (int) userid;
                     Intent intent = ViewPagerActivity.newIntent(getActivity(), mUser.getId());
                     startActivity(intent);
                     getActivity().finish();

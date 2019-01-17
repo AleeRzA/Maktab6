@@ -53,7 +53,7 @@
             android:layout_weight="1"
             android:background="@drawable/edittext_bottom_curv_gray"
             android:hint="@string/login_passTxtHint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <LinearLayout

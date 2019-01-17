@@ -3,15 +3,26 @@ package com.example.android.maktab6.model;
 import java.util.UUID;
 
 public class User {
+    private int _id;
     private String mName;
     private String mUserName;
     private String mPassword;
     private UUID mId;
-    public User(){
+
+    public User() {
         this(UUID.randomUUID());
     }
-    public User(UUID id){
+
+    public User(UUID id) {
         mId = id;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
     }
 
     public String getName() {

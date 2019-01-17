@@ -15,12 +15,13 @@ public class Task {
     private boolean mDone = false;
     private int mUserId;
 
-    public Task(User user){
+    public Task(int userID){
 
-        this(UUID.randomUUID(), user);
+        this(UUID.randomUUID(), userID);
     }
-    public Task(UUID taskId, User user){
+    public Task(UUID taskId, int userID){
         mId = taskId;
+        mUserId = userID;
         mDate = new Date();
     }
 

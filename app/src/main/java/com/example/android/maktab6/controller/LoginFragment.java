@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.TaskRepository;
 import com.example.android.maktab6.model.User;
 
@@ -24,6 +26,8 @@ import java.util.UUID;
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
+
+    public static final String TAG = "LoginFragment_TAG";
 
     private Button mLoginBtn;
     private Button mRegisterBtn;
@@ -40,9 +44,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     public static LoginFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         LoginFragment fragment = new LoginFragment();
         fragment.setArguments(args);
         return fragment;
@@ -107,14 +111,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.loginBtn_login:
-                if(_userName == null || _passWord == null){
+                if (_userName == null || _passWord == null) {
                     return;
                 }
                 mUser = mTaskRepository.validateUser(_userName, _passWord);
-                if(mUser != null){
+                if (mUser != null) {
                     UUID userId = mUser.getId();
+                    LoginUser.userLogin = mUser.get_id();
+                    Log.i(TAG, "onClick: " + LoginUser.userLogin);
                     Intent intent = ViewPagerActivity.newIntent(getActivity(), userId);
                     startActivity(intent);
                     getActivity().finish();

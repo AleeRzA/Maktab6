@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepository;
-import com.example.android.maktab6.model.User;
 
 import java.util.Date;
 import java.util.UUID;
@@ -26,9 +24,9 @@ public class TaskCursorWrapper extends CursorWrapper {
         boolean done = getInt(getColumnIndex(DBSchema.TaskTable.TaskColumns.DONE)) != 0;
         int userId = getInt(getColumnIndex(DBSchema.TaskTable.TaskColumns.USER_ID));
 
-        User user = TaskRepository.getInstance(mContext).getUserByTask(userId);
+//        User user = TaskRepository.getInstance(mContext).getUserByTask(userId);
 
-        Task task = new Task(uuid, user);
+        Task task = new Task(uuid, userId);
         task.setTitle(title);
         task.setDescription(description);
         task.setDate(date);

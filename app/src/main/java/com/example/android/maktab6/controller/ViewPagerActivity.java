@@ -3,6 +3,7 @@ package com.example.android.maktab6.controller;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -10,16 +11,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.Task;
-import com.example.android.maktab6.model.TaskRepository;
 
 import java.util.List;
 import java.util.UUID;
 
 public class ViewPagerActivity extends AppCompatActivity {
+
+    public static final String TAG = "ViewPagerActivity_TAG";
 
     public static final String REAL_TASK_CREATION = "realTaskCreation";
     public static final String TASK_LIST_FRAGMENT = "taskListFragment";
@@ -43,6 +46,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mUserId = (UUID) getIntent().getSerializableExtra(USER_ID_LOGGED_IN);
+        Log.i(TAG, "onCreate: " + mUserId.toString());
 
         mViewPager = findViewById(R.id.main_view_pager);
         mTabLayout = findViewById(R.id.main_tabLayout);
@@ -80,6 +84,10 @@ public class ViewPagerActivity extends AppCompatActivity {
                 return title;
             }
 
+            @Override
+            public int getItemPosition(@NonNull Object object) {
+                return POSITION_NONE;
+            }
         };
 
         mViewPager.setAdapter(mAdapter);
@@ -88,6 +96,7 @@ public class ViewPagerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(null, mUserId);
+
                 realEditTaskFragment.show(getSupportFragmentManager(), REAL_TASK_CREATION);
             }
         });
@@ -96,11 +105,19 @@ public class ViewPagerActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mTasks = TaskRepository.getInstance(this).getTasks();
-        if(!mTasks.isEmpty()){
-            mAdapter.notifyDataSetChanged();
+        Log.i(TAG, "onResume: ");
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            mAdapter.getItem(i).onResume();
         }
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: ");
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            mAdapter.getItem(i).onResume();
+        }
+    }
 }

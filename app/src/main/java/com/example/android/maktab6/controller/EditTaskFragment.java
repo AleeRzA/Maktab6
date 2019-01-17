@@ -93,7 +93,6 @@ public class EditTaskFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 RealEditTaskFragment realEditTaskFragment = RealEditTaskFragment.newInstance(mUUID, mUserUUID);
-                setTargetFragment(EditTaskFragment.this, REQUEST_CODE_EDITTASK);
                 realEditTaskFragment.show(getFragmentManager(), REAL_EDIT_TASK);
             }
         });

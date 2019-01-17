@@ -1,6 +1,8 @@
 package com.example.android.maktab6.controller;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -137,6 +139,16 @@ public class TaskListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK)
+            return;
+        if(requestCode == REQUEST_CODE_TASKLIST){
+            updateUI();
+        }
+    }
+
     private void removeAll() {
         mTaskLists.clear();
         mEmptyText.setVisibility(View.VISIBLE);
@@ -148,13 +160,15 @@ public class TaskListFragment extends Fragment {
     private void updateUI() {
         mRepository = TaskRepository.getInstance(getActivity());
         viewChecker(mRepository, _viewId);
-        if(mTaskAdapter == null) {
-            mTaskAdapter = new TaskAdapter(mTaskLists);
-            mRecyclerView.setAdapter(mTaskAdapter);
-        } else {
-            mTaskAdapter.setTasks(mTaskLists);
-            mTaskAdapter.notifyDataSetChanged();
+        if (mRecyclerView != null) {
+            if (mTaskAdapter == null) {
+                mTaskAdapter = new TaskAdapter(mTaskLists);
+                mRecyclerView.setAdapter(mTaskAdapter);
+            } else {
+                mTaskAdapter.setTasks(mTaskLists);
+                mTaskAdapter.notifyDataSetChanged();
 //            mTaskAdapter.notifyItemChanged(_position);
+            }
         }
     }
 
