@@ -38,5 +38,9 @@
     <string name="login_passTxtHint">Enter Your Password</string>
     <string name="login_passTxtHintAgn">Confirm Your Password</string>
     <string name="submit_button">SUBMIT</string>
+    <string name="done_task">Task is done</string>
+
+    <string name="task_isDone">TASK IS DONE</string>
+    <string name="task_notDone">TASK IS NOT DONE</string>
 
 </resources>

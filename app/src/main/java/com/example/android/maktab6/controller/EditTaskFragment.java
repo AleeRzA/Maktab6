@@ -39,6 +39,7 @@ public class EditTaskFragment extends DialogFragment {
     private Button mEditButton;
     private Button mOkButton;
     private UUID mTaskUUID;
+    private TextView mDoneChecker;
 
 
 
@@ -61,7 +62,6 @@ public class EditTaskFragment extends DialogFragment {
         mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID);
         mTask = TaskRepository.getInstance(getActivity()).getTaskById(mTaskUUID);
         Log.i("tas_finding", "Task: " + mTask + " Task id: " + mTaskUUID);
-        getActivity().setTitle(mTask.getTitle());
     }
 
     @NonNull
@@ -81,6 +81,7 @@ public class EditTaskFragment extends DialogFragment {
         mTimeText = view.findViewById(R.id.editFrag_time);
         mEditButton = view.findViewById(R.id.editFrag_btn_edit);
         mOkButton = view.findViewById(R.id.editFrag_btn_ok);
+        mDoneChecker = view.findViewById(R.id.doneChecker_text);
 
         mTitleText.setText(mTask.getTitle());
         mDescriptionText.setText(mTask.getDescription());
@@ -95,6 +96,11 @@ public class EditTaskFragment extends DialogFragment {
                 EditTaskFragment.this.dismiss();
             }
         });
+        if(mTask.isDone()){
+            mDoneChecker.setText(R.string.task_isDone);
+        }else {
+            mDoneChecker.setText(R.string.task_notDone);
+        }
         mOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

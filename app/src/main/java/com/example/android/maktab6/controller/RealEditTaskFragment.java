@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,6 +52,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     private TextView mEditTimeBtn;
     private Button mSubmit;
     private TextView mCancel;
+    private CheckBox mDoneCheckBox;
 
     private Task mTask;
     private UUID mTaskUUID;
@@ -100,12 +103,15 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         mEditTimeBtn = view.findViewById(R.id.realFragTime_btn_edit);
         mSubmit = view.findViewById(R.id.realFragDate_submitBtn);
         mCancel = view.findViewById(R.id.realFragTime_btn_cancel);
+        mDoneCheckBox = view.findViewById(R.id.checkBox_doneTask);
 
         if (mTask != null) {
             mEditTitle.setText(mTask.getTitle());
             mEditDescription.setText(mTask.getDescription());
             mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getDate()));
             mRealTime.setText(new SimpleDateFormat("hh:mm a").format(mTask.getDate()));
+            if(mTask.isDone())
+                mDoneCheckBox.setEnabled(false);
         }
 
 
@@ -113,6 +119,13 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         mEditTimeBtn.setOnClickListener(this);
         mSubmit.setOnClickListener(this);
         mCancel.setOnClickListener(this);
+
+        mDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mTask.setDone(true);
+            }
+        });
         return view;
     }
 
@@ -141,6 +154,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             dismiss();
         }
         if (view.getId() == R.id.realFragDate_submitBtn) {
+
             if (mTask.getId().equals(mTaskUUID)) {
                 mTaskRepository.update(mTask);
                 Log.i(TAG, "onClick: if " + mTask.getId().toString());

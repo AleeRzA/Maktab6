@@ -110,6 +110,16 @@
                 android:text="@string/edit_btn"/>
 
         </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/checkBox_doneTask"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/done_task" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
