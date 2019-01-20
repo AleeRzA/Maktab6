@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +37,7 @@ public class TaskListFragment extends Fragment {
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
     private static final String SHOW_TASK = "show_task";
-    private static final int REQUEST_CODE_TASKLIST = 31;
+    private static final int REQUEST_CODE_TASK_LIST = 31;
     private static final String TASK_UUID = "task_uuid";
 
 
@@ -82,12 +83,15 @@ public class TaskListFragment extends Fragment {
     private void viewChecker(TaskRepository repository, int viewId) {
         if(viewId == 0){
             mTaskLists = repository.getTasks();
+            Log.i("mTaskList", "task list position zero: " + viewId + " -- " +mTaskLists.size());
         }
         if (viewId == 1){
             mTaskLists = repository.getDoneTasks();
+            Log.i("mTaskList", "task list position one: " + viewId + " -- " +mTaskLists.size());
         }
         if (viewId == 2){
-            mTaskLists = repository.getUndones();
+            mTaskLists = repository.getUndoneTasks();
+            Log.i("mTaskList", "task list position two: " + viewId + " -- " +mTaskLists.size());
         }
     }
 
@@ -149,7 +153,7 @@ public class TaskListFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == Activity.RESULT_OK)
             return;
-        if(requestCode == REQUEST_CODE_TASKLIST){
+        if(requestCode == REQUEST_CODE_TASK_LIST){
             updateUI();
         }
     }
@@ -201,7 +205,7 @@ public class TaskListFragment extends Fragment {
         public void onClick(View view) {
             _position = getAdapterPosition();
             EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
-            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASKLIST);
+            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
         }
     }

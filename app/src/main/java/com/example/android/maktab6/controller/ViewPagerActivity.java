@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -24,7 +23,7 @@ public class ViewPagerActivity extends AppCompatActivity {
 
     public static final String TAG = "ViewPagerActivity_TAG";
     public static final String REAL_TASK_CREATION = "realTaskCreation";
-    private static final int REQUEST_CODE_TASKLIST = 31;
+    private static final int REQUEST_CODE_TASK_LIST = 31;
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
@@ -55,7 +54,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         mAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-
+                Log.i("mTaskList", "ViewPager position : " + position + " -- ");
                 return TaskListFragment.newInstance(position, mTaskUUID);
             }
 
@@ -66,25 +65,24 @@ public class ViewPagerActivity extends AppCompatActivity {
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
-                String title = "";
+                String title;
                 switch (position){
-                    case 0:
-                        title = "ALL";
-                        break;
                     case 1:
                         title = "DONE";
+                        Log.i("mTaskList", "ViewPager position '1' : " + position + " -- ");
                         break;
                     case 2:
                         title = "UNDONE";
+                        Log.i("mTaskList", "ViewPager position '2': " + position + " -- ");
+                        break;
+                    default:
+                        title = "ALL";
+                        Log.i("mTaskList", "ViewPager position '0': " + position + " -- ");
                         break;
                 }
                 return title;
             }
 
-            @Override
-            public int getItemPosition(@NonNull Object object) {
-                return POSITION_NONE;
-            }
         };
 
         mViewPager.setAdapter(mAdapter);
@@ -97,15 +95,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                 realEditTaskFragment.show(getSupportFragmentManager(), REAL_TASK_CREATION);
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume: ");
-        for (int i = 0; i < mAdapter.getCount(); i++) {
-            mAdapter.getItem(i).onResume();
-        }
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener( mTabLayout));
     }
 
 
@@ -115,7 +105,7 @@ public class ViewPagerActivity extends AppCompatActivity {
         if(resultCode != Activity.RESULT_OK){
             return;
         }
-        if(requestCode == REQUEST_CODE_TASKLIST){
+        if(requestCode == REQUEST_CODE_TASK_LIST){
             mTaskUUID = (UUID) data.getSerializableExtra(RealEditTaskFragment.getTaskUuid());
             Log.i("view_pager", "Check task Id: " + mTaskUUID);
         }
