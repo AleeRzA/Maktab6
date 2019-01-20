@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
-import com.example.android.maktab6.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -36,11 +33,14 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     public static final String TAG = "RealEditTaskFragment_TAG";
 
     private static final String TASK_ID_EDIT = "com.example.android.maktab6.controller.task_id_edit";
-    private static final String USER_ID_EDIT = "com.example.android.maktab6.controller.user_id_edit";
     private static final int REQUEST_CODE_DATE = 10;
     private static final int REQUEST_CODE_TIME = 11;
     private static final String TAG_DATE_PICKER = "date_datePicker";
     private static final String TAG_TIME_PICKER = "time_timePicker";
+
+
+
+    private static final String TASK_UUID = "task_uuid";
 
     private EditText mEditTitle;
     private EditText mEditDescription;
@@ -53,19 +53,16 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
     private Task mTask;
     private UUID mTaskUUID;
-    private User mUser;
-    private UUID mUserUUID;
     private TaskRepository mTaskRepository;
 
     public RealEditTaskFragment() {
         // Required empty public constructor
     }
 
-    public static RealEditTaskFragment newInstance(UUID taskId, UUID userId) {
+    public static RealEditTaskFragment newInstance(UUID taskId) {
 
         Bundle args = new Bundle();
         args.putSerializable(TASK_ID_EDIT, taskId);
-        args.putSerializable(USER_ID_EDIT, userId);
         RealEditTaskFragment fragment = new RealEditTaskFragment();
         fragment.setArguments(args);
         return fragment;
@@ -74,14 +71,13 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserUUID = (UUID) getArguments().getSerializable(USER_ID_EDIT);
-        Log.i(TAG, "onCreate: " + mUserUUID.toString());
+
         mTaskRepository = TaskRepository.getInstance(getActivity());
-        mUser = mTaskRepository.getUserById(mUserUUID);
+
 
         if (getArguments().getSerializable(TASK_ID_EDIT) != null) {
             mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
-            mTask = TaskRepository.getInstance(getActivity()).getTaskById(mTaskUUID);
+            mTask = mTaskRepository.getTaskById(mTaskUUID);
 
             Log.i(TAG, "onCreate: if " + mTask.getId().toString());
         } else {
@@ -112,38 +108,6 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             mRealTime.setText(new SimpleDateFormat("hh:mm a").format(mTask.getDate()));
         }
 
-        mEditTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mTask.setTitle(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mEditDescription.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mTask.setDescription(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
         mEditDateBtn.setOnClickListener(this);
         mEditTimeBtn.setOnClickListener(this);
@@ -159,6 +123,10 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        mTask.setTitle(mEditTitle.getText().toString());
+        mTask.setDescription(mEditDescription.getText().toString());
+
+
         if (view.getId() == R.id.realFragDate_btn_edit) {
             DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
             datePickerFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_DATE);
@@ -173,7 +141,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             dismiss();
         }
         if (view.getId() == R.id.realFragDate_submitBtn) {
-            if (mTask.getId() == mTaskUUID) {
+            if (mTask.getId().equals(mTaskUUID)) {
                 mTaskRepository.update(mTask);
                 Log.i(TAG, "onClick: if " + mTask.getId().toString());
             } else {
@@ -181,13 +149,19 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
                 Log.i(TAG, "onClick: else " + mTask.getId().toString());
             }
 
-//            Intent intent = new Intent();
-//            intent.putExtra("task_edited", mTask.getId());
-//            getActivity().setResult(0, intent);
+            Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+//            intent.putExtra(TASK_UUID, mTask.getId());
+//            ViewPagerActivity viewPagerActivity = (ViewPagerActivity) getActivity();
+//            viewPagerActivity.
+            Log.i("view_pager", "View Pager is Called: " + mTask.getId());
             dismiss();
         }
     }
-
+    public static String getTaskUuid() {
+        return TASK_UUID;
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

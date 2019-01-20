@@ -13,14 +13,14 @@ public class UserCursorWrapper extends CursorWrapper {
     }
 
     public User getUser(){
-        int _id = getInt(getColumnIndex("user_id"));
+        int _idTable = getInt(getColumnIndex("user_id"));
         UUID uuid = UUID.fromString(getString(getColumnIndex(DBSchema.UserTable.UserColumns.UUID)));
         String name = getString(getColumnIndex(DBSchema.UserTable.UserColumns.NAME));
         String email = getString(getColumnIndex(DBSchema.UserTable.UserColumns.EMAIL));
         String password = getString(getColumnIndex(DBSchema.UserTable.UserColumns.PASSWORD));
 
         User user = new User(uuid);
-        user.set_id(_id);
+        user.set_idTable(_idTable);
         user.setName(name);
         user.setUserName(email);
         user.setPassword(password);

@@ -3,7 +3,7 @@ package com.example.android.maktab6.model;
 import java.util.UUID;
 
 public class User {
-    private int _id;
+    private int _idTable;
     private String mName;
     private String mUserName;
     private String mPassword;
@@ -17,12 +17,12 @@ public class User {
         mId = id;
     }
 
-    public int get_id() {
-        return _id;
+    public int get_idTable() {
+        return _idTable;
     }
 
-    public void set_id(int _id) {
-        this._id = _id;
+    public void set_idTable(int _idTable) {
+        this._idTable = _idTable;
     }
 
     public String getName() {

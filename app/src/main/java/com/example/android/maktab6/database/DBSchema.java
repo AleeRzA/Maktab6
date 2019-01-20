@@ -13,7 +13,7 @@ public class DBSchema {
                 public static final String DATE = "date";
                 public static final String DESCRIPTION = "description";
                 public static final String DONE = "done";
-                public static final String USER_ID = "use_id";
+                public static final String USER_ID = "user_id";
             }
         }
         public static final class UserTable{

@@ -6,8 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +21,9 @@ import com.example.android.maktab6.model.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements View.OnClickListener {
 
+    public static final String TAG_LOG_USER = "TAG_LOG_USER";
     private EditText mName;
     private EditText mEmail;
     private EditText mPassword;
@@ -41,9 +41,7 @@ public class RegisterFragment extends Fragment {
     }
 
     public static RegisterFragment newInstance() {
-
         Bundle args = new Bundle();
-
         RegisterFragment fragment = new RegisterFragment();
         fragment.setArguments(args);
         return fragment;
@@ -66,113 +64,46 @@ public class RegisterFragment extends Fragment {
         mConfirm = view.findViewById(R.id.txtLogin_passwordAgn_edit);
         mSubmitBtn = view.findViewById(R.id.txtLogin_submitBtn);
 
-        mName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        mSubmitBtn.setOnClickListener(this);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _name = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mEmail.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _email = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _password = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mConfirm.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _confirm = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!_password.equals(_confirm)) {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.confirmPass_alertDlg)
-                            .setIcon(R.drawable.ic_error_alert)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .create().show();
-                } else {
-                    mUser.setName(_name);
-                    mUser.setUserName(_email);
-                    mUser.setPassword(_password);
-                    long userid = TaskRepository.getInstance(getActivity()).addNewUser(mUser);
-                    LoginUser.userLogin = (int) userid;
-                    Intent intent = ViewPagerActivity.newIntent(getActivity(), mUser.getId());
-                    startActivity(intent);
-                    getActivity().finish();
-                }
-            }
-        });
         return view;
     }
 
-//    public void addTextChangeListener(EditText editText, final int id) {
-//        editText.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                switch (id) {
-//                        case
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
-//    }
+    @Override
+    public void onClick(View v) {
+        _name = mName.getText().toString();
+        Log.i(TAG_LOG_USER, "SignUp the name is: " + _name);
+        _email = mEmail.getText().toString();
+        Log.i(TAG_LOG_USER, "SignUp the email is: " + _email);
+        _password = mPassword.getText().toString();
+        Log.i(TAG_LOG_USER, "SignUp the password is: " + _password);
+        _confirm = mConfirm.getText().toString();
+        Log.i(TAG_LOG_USER, "SignUp the confirm is: " + _confirm);
+
+        if (!_password.equals(_confirm)) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.confirmPass_alertDlg)
+                    .setIcon(R.drawable.ic_error_alert)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .create().show();
+        } else if(_name.length() == 0 || _email.length() == 0){
+            new AlertDialog.Builder(getActivity())
+                    .setTitle(R.string.field_isEmpty)
+                    .setIcon(R.drawable.ic_error_alert)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .create().show();
+        } else  {
+            mUser.setName(_name);
+            mUser.setUserName(_email);
+            mUser.setPassword(_password);
+            Log.i(TAG_LOG_USER, "userName: " + mUser.getName() +
+                    " userEmail: " + mUser.getUserName() + " password: " + mUser.getPassword());
+            LoginUser.userLogin = (int) TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+            mUser.set_idTable(LoginUser.userLogin);
+            Log.i(TAG_LOG_USER, "LoginUser: " + LoginUser.userLogin);
+            Intent intent = ViewPagerActivity.newIntent(getActivity());
+            startActivity(intent);
+            getActivity().finish();
+        }
+    }
 }

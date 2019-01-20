@@ -13,7 +13,7 @@ public class Task {
     private Date mDate;
     private UUID mId;
     private boolean mDone = false;
-    private int mUserId;
+    private int mUserTableId;
 
     public Task(int userID){
 
@@ -21,7 +21,7 @@ public class Task {
     }
     public Task(UUID taskId, int userID){
         mId = taskId;
-        mUserId = userID;
+        mUserTableId = userID;
         mDate = new Date();
     }
 
@@ -63,11 +63,11 @@ public class Task {
     }
 
 
-    public int getUserId() {
-        return mUserId;
+    public int getUserTableId() {
+        return mUserTableId;
     }
 
-    public void setUserId(int userId) {
-        mUserId = userId;
+    public void setUserTableId(int userTableId) {
+        mUserTableId = userTableId;
     }
 }

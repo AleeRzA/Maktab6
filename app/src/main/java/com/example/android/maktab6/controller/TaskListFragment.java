@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
 
@@ -34,9 +35,9 @@ public class TaskListFragment extends Fragment {
 
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
-    public static final String USER_UUID = "com.example.android.maktab6.user_uuid";
     private static final String SHOW_TASK = "show_task";
     private static final int REQUEST_CODE_TASKLIST = 31;
+    private static final String TASK_UUID = "task_uuid";
 
 
     private RecyclerView mRecyclerView;
@@ -46,7 +47,7 @@ public class TaskListFragment extends Fragment {
     private ImageView mEmptyImage;
     private int _position;
     private Task mTask;
-    private UUID mUserUUID;
+    private UUID mTaskUUID;
     private TaskRepository mRepository;
     private int _viewId;
 
@@ -54,10 +55,10 @@ public class TaskListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static TaskListFragment newInstance(int viewId, UUID userId) {
+    public static TaskListFragment newInstance(int viewId, UUID taskId) {
         Bundle args = new Bundle();
         args.putInt(ARGS_TAK_ID, viewId);
-        args.putSerializable(USER_UUID, userId);
+        args.putSerializable(TASK_UUID, taskId);
         TaskListFragment fragment = new TaskListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -67,10 +68,14 @@ public class TaskListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mRepository = TaskRepository.getInstance(getActivity());
-        mUserUUID = (UUID) getArguments().getSerializable(USER_UUID);
-
         _viewId = getArguments().getInt(ARGS_TAK_ID);
         viewChecker(mRepository, _viewId);
+        if (getArguments().getSerializable(TASK_UUID) != null) {
+            mTaskUUID = (UUID) getArguments().getSerializable(TASK_UUID);
+            mTask = mRepository.getTaskById(mTaskUUID);
+        } else {
+            mTask = new Task(LoginUser.userLogin);
+        }
         setHasOptionsMenu(true);
     }
 
@@ -158,8 +163,7 @@ public class TaskListFragment extends Fragment {
 
 
     private void updateUI() {
-        mRepository = TaskRepository.getInstance(getActivity());
-        viewChecker(mRepository, _viewId);
+
         if (mRecyclerView != null) {
             if (mTaskAdapter == null) {
                 mTaskAdapter = new TaskAdapter(mTaskLists);
@@ -167,7 +171,6 @@ public class TaskListFragment extends Fragment {
             } else {
                 mTaskAdapter.setTasks(mTaskLists);
                 mTaskAdapter.notifyDataSetChanged();
-//            mTaskAdapter.notifyItemChanged(_position);
             }
         }
     }
@@ -197,7 +200,7 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             _position = getAdapterPosition();
-            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId(), mUserUUID);
+            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
             editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASKLIST);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
         }

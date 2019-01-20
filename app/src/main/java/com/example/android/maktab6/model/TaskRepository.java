@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.android.maktab6.database.DBSchema;
 import com.example.android.maktab6.database.DataBaseHelper;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TaskRepository {
+    public static final String TAG_LOG_USER = "TAG_LOG_USER";
     private static TaskRepository instance;
     private SQLiteDatabase mDatabase;
     private Context mContext;
@@ -38,7 +40,7 @@ public class TaskRepository {
         contentValues.put(DBSchema.TaskTable.TaskColumns.DESCRIPTION, task.getDescription());
         contentValues.put(DBSchema.TaskTable.TaskColumns.DATE, task.getDate().getTime());
         contentValues.put(DBSchema.TaskTable.TaskColumns.DONE, task.isDone() ? 1 : 0);
-        contentValues.put(DBSchema.TaskTable.TaskColumns.USER_ID, task.getUserId());
+        contentValues.put(DBSchema.TaskTable.TaskColumns.USER_ID, task.getUserTableId());
         return contentValues;
     }
 
@@ -76,11 +78,12 @@ public class TaskRepository {
         return new UserCursorWrapper(cursor);
     }
 
-    public void addTaskToList(Task task) {
-        mDatabase.insert(DBSchema.TaskTable.NAME, null, getTaskContentValues(task));
+    public long addTaskToList(Task task) {
+       return mDatabase.insert(DBSchema.TaskTable.NAME, null, getTaskContentValues(task));
     }
 
     public long addNewUser(User user) {
+        Log.i(TAG_LOG_USER, "user added...");
         return mDatabase.insert(DBSchema.UserTable.NAME, null, getUserContentValues(user));
     }
 
@@ -180,17 +183,18 @@ public class TaskRepository {
         return undones;
     }
 
-    public User validateUser(String username, String password) {
+    public int validateUser(String username, String password) {
         String whereClause = DBSchema.UserTable.UserColumns.EMAIL + " = ? " + "AND " +
                 DBSchema.UserTable.UserColumns.PASSWORD + " = ?";
         String[] whereArgs = new String[]{username, password};
         UserCursorWrapper userCursorWrapper = queryUser(whereClause, whereArgs);
         try {
             if (userCursorWrapper.getCount() == 0) {
-                return null;
+                return -1;
             }
             userCursorWrapper.moveToFirst();
-            return userCursorWrapper.getUser();
+            LoginUser.userLogin = userCursorWrapper.getUser().get_idTable();
+            return LoginUser.userLogin;
         } finally {
             userCursorWrapper.close();
         }

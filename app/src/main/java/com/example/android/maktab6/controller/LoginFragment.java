@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +16,6 @@ import android.widget.EditText;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.TaskRepository;
-import com.example.android.maktab6.model.User;
-
-import java.util.UUID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +31,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private EditText mPassword;
     private String _userName;
     private String _passWord;
-    private User mUser;
     private TaskRepository mTaskRepository;
 
     public LoginFragment() {
@@ -46,7 +40,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public static LoginFragment newInstance() {
 
         Bundle args = new Bundle();
-
         LoginFragment fragment = new LoginFragment();
         fragment.setArguments(args);
         return fragment;
@@ -72,56 +65,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mRegisterBtn.setOnClickListener(this);
         mGuestBtn.setOnClickListener(this);
 
-        mUserName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _userName = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        mPassword.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                _passWord = charSequence.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         return view;
     }
 
     @Override
     public void onClick(View view) {
+        _userName = mUserName.getText().toString();
+        _passWord = mPassword.getText().toString();
 
         switch (view.getId()) {
             case R.id.loginBtn_login:
                 if (_userName == null || _passWord == null) {
                     return;
                 }
-                mUser = mTaskRepository.validateUser(_userName, _passWord);
-                if (mUser != null) {
-                    UUID userId = mUser.getId();
-                    LoginUser.userLogin = mUser.get_id();
+                if (mTaskRepository.validateUser(_userName, _passWord) > 0) {
                     Log.i(TAG, "onClick: " + LoginUser.userLogin);
-                    Intent intent = ViewPagerActivity.newIntent(getActivity(), userId);
+                    Intent intent = ViewPagerActivity.newIntent(getActivity());
                     startActivity(intent);
                     getActivity().finish();
                 } else {
@@ -130,11 +89,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             .setIcon(R.drawable.ic_error_alert)
                             .setPositiveButton(android.R.string.ok, null)
                             .create().show();
+                    mUserName.setText("");
+                    mPassword.setText("");
                 }
                 break;
 
             case R.id.loginBtn_guest:
-                Intent intent = ViewPagerActivity.newIntent(getActivity(), null);
+                Intent intent = ViewPagerActivity.newIntent(getActivity());
                 startActivity(intent);
                 getActivity().finish();
                 break;
