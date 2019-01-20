@@ -1,3 +1,4 @@
+apply plugin: 'org.greenrobot.greendao'
 apply plugin: 'com.android.application'
 
 android {
@@ -28,4 +29,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:design:27.1.1'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
-    }
+    implementation 'org.greenrobot:greendao:3.2.2'
+
+}
