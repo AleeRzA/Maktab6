@@ -1,11 +1,8 @@
 package com.example.android.maktab6.model;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.android.maktab6.database.DBSchema;
-import com.example.android.maktab6.database.DataBaseHelper;
 import com.example.android.maktab6.greendao.App;
 
 import java.util.List;
@@ -14,7 +11,6 @@ import java.util.UUID;
 public class TaskRepository {
     public static final String TAG_LOG_USER = "TAG_LOG_USER";
     private static TaskRepository instance;
-    private SQLiteDatabase mDatabase;
     private Context mContext;
     private UserDao mUserDao;
     private TaskDao mTaskDao;
@@ -25,7 +21,6 @@ public class TaskRepository {
         mTaskDao = daoSession.getTaskDao();
 
         mContext = context.getApplicationContext();
-        mDatabase = new DataBaseHelper(mContext).getWritableDatabase();
     }
 
     public static TaskRepository getInstance(Context context) {
@@ -48,7 +43,7 @@ public class TaskRepository {
     public void removeAllTasks(UUID uuid) {
 //        String whereClause = DBSchema.TaskTable.TaskColumns.USER_ID + " = ?";
 //        String[] whereArgs = new String[]{uuid.toString()};
-        mDatabase.delete(DBSchema.TaskTable.NAME, null, null);
+//        mDatabase.delete(DBSchema.TaskTable.NAME, null, null);
     }
 
     public List<Task> getTasks() {

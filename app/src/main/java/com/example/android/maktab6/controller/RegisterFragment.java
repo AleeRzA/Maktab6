@@ -93,11 +93,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     .setPositiveButton(android.R.string.ok, null)
                     .create().show();
         } else  {
-            mUser.setName(_name);
-            mUser.setUserName(_email);
-            mUser.setPassword(_password);
-            Log.i(TAG_LOG_USER, "userName: " + mUser.getName() +
-                    " userEmail: " + mUser.getUserName() + " password: " + mUser.getPassword());
+            mUser.setMName(_name);
+            mUser.setMUserName(_email);
+            mUser.setMPassword(_password);
+            Log.i(TAG_LOG_USER, "userName: " + mUser.getMName() +
+                    " userEmail: " + mUser.getMUserName() + " password: " + mUser.getMPassword());
             LoginUser.userLogin = TaskRepository.getInstance(getActivity()).addNewUser(mUser);
             mUser.set_idTableUser(LoginUser.userLogin);
             Log.i(TAG_LOG_USER, "LoginUser: " + LoginUser.userLogin);

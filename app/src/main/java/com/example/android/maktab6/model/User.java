@@ -11,7 +11,7 @@ public class User {
     @Id(autoincrement = true)
     private Long _idTableUser;
     private String mName;
-    @Unique
+//    @Unique
     private String mUserName;
     private String mPassword;
     @Unique
@@ -40,43 +40,9 @@ public class User {
     }
 
     public void set_idTableUser(Long _idTableUser) {
+
         this._idTableUser = _idTableUser;
     }
-
-    /**
-     *
-     */
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
-    public String getUserName() {
-        return mUserName;
-    }
-
-    public void setUserName(String userName) {
-        mUserName = userName;
-    }
-
-    public String getPassword() {
-        return mPassword;
-    }
-
-    public void setPassword(String password) {
-        mPassword = password;
-    }
-
-    public UUID getUserUUID() {
-        return UUID.fromString(mUserUUID);
-    }
-
-    /**
-     *
-     */
 
     public String getMName() {
         return this.mName;
@@ -91,6 +57,7 @@ public class User {
     }
 
     public void setMUserName(String mUserName) {
+
         this.mUserName = mUserName;
     }
 
