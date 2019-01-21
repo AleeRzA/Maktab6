@@ -9,7 +9,7 @@ import org.greenrobot.greendao.database.Database;
 
 public class App extends Application {
     private DaoSession mDaoSession;
-    private App mApp;
+    private static App mApp;
 
     @Override
     public void onCreate() {
@@ -25,7 +25,7 @@ public class App extends Application {
         return mDaoSession;
     }
 
-    public App getApp() {
+    public static App getApp() {
         return mApp;
     }
 }
