@@ -17,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -181,17 +184,37 @@ public class TaskListFragment extends Fragment {
 
 
     //--------------------------------------------------/
-    private class SampleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class SampleHolder extends RecyclerView.ViewHolder  {
         private TextView mTextTitle;
         private TextView mChar;
-
+        private Button mShareButton;
+        private ImageView mImageView;
+        private ImageButton mCameraBtn;
 
         public SampleHolder(View itemView) {
             super(itemView);
             mTextTitle = itemView.findViewById(R.id.sampleTask_textView);
             mChar = itemView.findViewById(R.id.sampleTask_circleShapeView);
+            mShareButton = itemView.findViewById(R.id.share_smplFragBtn);
+            mImageView = itemView.findViewById(R.id.img_smplFragBtn);
+            mCameraBtn = itemView.findViewById(R.id.camera_smplFragBtn);
 
-            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    _position = getAdapterPosition();
+                    EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(UUID.fromString(mTask.getMTaskUUId()));
+                    editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
+                    editTaskFragment.show(getFragmentManager(), SHOW_TASK);
+                }
+            });
+            mShareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    composeMmsMessage();
+                }
+            });
+//            mCameraBtn.setOnClickListener(this);
 
         }
         public void bindSample(Task task){
@@ -201,13 +224,7 @@ public class TaskListFragment extends Fragment {
             char firstChar = title.charAt(0);
             mChar.setText(String.valueOf(firstChar));
         }
-        @Override
-        public void onClick(View view) {
-            _position = getAdapterPosition();
-            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(UUID.fromString(mTask.getMTaskUUId()));
-            editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
-            editTaskFragment.show(getFragmentManager(), SHOW_TASK);
-        }
+
     }
     //--------------------------------------------------/
     private class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
@@ -247,6 +264,24 @@ public class TaskListFragment extends Fragment {
         }
 
     }
+    public void composeMmsMessage() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, getTaskString());
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(Intent.createChooser(intent, "OPEN WITH: "));
+        }
     }
+    public String getTaskString(){
+        String _title = mTask.getMTitle();
+        String _desc = mTask.getMDescription();
+        String _doneStat = mTask.getMDone() ? "is done" : "is not done";
+        String _date = new SimpleDateFormat("yyyy.MM.dd").format(mTask.getMDate());
+        String _time = new SimpleDateFormat("hh:mm a").format(mTask.getMDate());
+        String finalString = "Title: " + _title + "\nDescription: " + _desc
+                + ". The task " + _doneStat + "; it was created on " + _date + " at " + _time + ".";
+        return finalString;
+    }
+}
 
 
