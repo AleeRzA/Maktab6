@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.example.android.maktab6.greendao.App;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.io.File;
 import java.util.List;
 import java.util.UUID;
@@ -94,6 +96,16 @@ public class TaskRepository {
                 .where(TaskDao.Properties.MTaskUUId.eq(task.getMTaskUUId())).limit(1).unique()
         );
     }
+
+    public List<Task> searchQuery(String title, String desc){
+        QueryBuilder<Task> queryBuilder = mTaskDao.queryBuilder();
+              queryBuilder.where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin),
+              queryBuilder.or(TaskDao.Properties.MTitle.like(title)
+                      , TaskDao.Properties.MDescription.like(desc)));
+        List<Task> taskList = queryBuilder.list();
+        return taskList;
+    }
+
     public File getPhotoFile(Task task){
         File file = mContext.getFilesDir();
         File photoFile = new File(file, task.getPhotoName());

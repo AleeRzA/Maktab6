@@ -48,9 +48,11 @@ public class TaskListFragment extends Fragment {
 
     public static final String ARGS_TAK_ID = "com.example.android.maktab6.controller.args_takId";
     private static final String SHOW_TASK = "show_task";
-    private static final int REQUEST_CODE_TASK_LIST = 31;
     private static final String TASK_UUID = "task_uuid";
-    public static final int REQUEST_CODE_PHOTO = 30;
+    private static final String SEARCH_TASK = "search_task";
+    private static final int REQUEST_CODE_PHOTO = 30;
+    private static final int REQUEST_CODE_TASK_LIST = 31;
+    private static final int REQUEST_CODE_SEARCh = 32;
 
 
     private RecyclerView mRecyclerView;
@@ -145,11 +147,6 @@ public class TaskListFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_task_list, menu);
@@ -160,6 +157,12 @@ public class TaskListFragment extends Fragment {
         if (item.getItemId()== R.id.removeAll_btn) {
             mRepository.removeAllTasks(mTaskLists);
             updateUI();
+            return true;
+        }
+        if(item.getItemId() == R.id.searchTask_btn){
+            SearchFragment searchFragment = SearchFragment.newInstance();
+            searchFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_SEARCh);
+            searchFragment.show(getFragmentManager(), SEARCH_TASK);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,6 +180,17 @@ public class TaskListFragment extends Fragment {
             Uri uri = getUriFile();
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             setImgInside();
+        }
+        if(requestCode == REQUEST_CODE_SEARCh){
+            String title = data.getStringExtra(SearchFragment.getSearchTitle());
+            String desc = data.getStringExtra(SearchFragment.getSearchDesc());
+            List<Task> taskList = mRepository.searchQuery(title, desc);
+            if(!taskList.isEmpty()){
+                mTaskLists = taskList;
+                Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
     }
 

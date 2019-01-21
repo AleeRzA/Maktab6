@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/E:/ANDROID-STUDIO/android_studio_installation/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_camera_enhance_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/E:/ANDROID-STUDIO/android_studio_installation/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,7 +45,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="E:\Maktab_Sharif\1.Sessions\jalase17\HomeWork6\tasks.png" />
-                                      <entry key="outputName" value="ic_camera" />
+                                      <entry key="outputName" value="ic_search_" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="3700b3" />
                                     </map>
