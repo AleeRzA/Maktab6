@@ -98,8 +98,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             mUser.setPassword(_password);
             Log.i(TAG_LOG_USER, "userName: " + mUser.getName() +
                     " userEmail: " + mUser.getUserName() + " password: " + mUser.getPassword());
-            LoginUser.userLogin = (int) TaskRepository.getInstance(getActivity()).addNewUser(mUser);
-            mUser.set_idTable(LoginUser.userLogin);
+            LoginUser.userLogin = TaskRepository.getInstance(getActivity()).addNewUser(mUser);
+            mUser.set_idTableUser(LoginUser.userLogin);
             Log.i(TAG_LOG_USER, "LoginUser: " + LoginUser.userLogin);
             Intent intent = ViewPagerActivity.newIntent(getActivity());
             startActivity(intent);

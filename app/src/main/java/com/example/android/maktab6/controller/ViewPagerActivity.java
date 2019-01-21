@@ -29,7 +29,7 @@ public class ViewPagerActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private FloatingActionButton mActionButton;
     private FragmentStatePagerAdapter mAdapter;
-    private int mUserId;
+    private Long mUserId;
 
     private UUID mTaskUUID;
 

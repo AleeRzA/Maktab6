@@ -35,7 +35,7 @@ public class TaskRepository {
 
     public ContentValues getTaskContentValues(Task task) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBSchema.TaskTable.TaskColumns.UUID, task.getId().toString());
+        contentValues.put(DBSchema.TaskTable.TaskColumns.UUID, task.getTaskUUId().toString());
         contentValues.put(DBSchema.TaskTable.TaskColumns.TITLE, task.getTitle());
         contentValues.put(DBSchema.TaskTable.TaskColumns.DESCRIPTION, task.getDescription());
         contentValues.put(DBSchema.TaskTable.TaskColumns.DATE, task.getDate().getTime());
@@ -46,7 +46,7 @@ public class TaskRepository {
 
     public ContentValues getUserContentValues(User user) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DBSchema.UserTable.UserColumns.UUID, user.getId().toString());
+        contentValues.put(DBSchema.UserTable.UserColumns.UUID, user.getUserUUID().toString());
         contentValues.put(DBSchema.UserTable.UserColumns.NAME, user.getName());
         contentValues.put(DBSchema.UserTable.UserColumns.EMAIL, user.getUserName());
         contentValues.put(DBSchema.UserTable.UserColumns.PASSWORD, user.getPassword());
@@ -171,17 +171,17 @@ public class TaskRepository {
         return undoneTask;
     }
 
-    public int validateUser(String username, String password) {
+    public Long validateUser(String username, String password) {
         String whereClause = DBSchema.UserTable.UserColumns.EMAIL + " = ? " + "AND " +
                 DBSchema.UserTable.UserColumns.PASSWORD + " = ?";
         String[] whereArgs = new String[]{username, password};
         UserCursorWrapper userCursorWrapper = queryUser(whereClause, whereArgs);
         try {
             if (userCursorWrapper.getCount() == 0) {
-                return -1;
+                return null;
             }
             userCursorWrapper.moveToFirst();
-            LoginUser.userLogin = userCursorWrapper.getUser().get_idTable();
+            LoginUser.userLogin = userCursorWrapper.getUser().get_idTableUser();
             return LoginUser.userLogin;
         } finally {
             userCursorWrapper.close();
@@ -193,7 +193,7 @@ public class TaskRepository {
                 DBSchema.TaskTable.NAME,
                 getTaskContentValues(task),
                 DBSchema.TaskTable.TaskColumns.UUID + " = ? ",
-                new String[]{task.getId().toString()});
+                new String[]{task.getTaskUUId().toString()});
     }
 
 }

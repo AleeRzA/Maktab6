@@ -204,7 +204,7 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             _position = getAdapterPosition();
-            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getId());
+            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getTaskUUId());
             editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
         }

@@ -82,11 +82,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
             mTask = mTaskRepository.getTaskById(mTaskUUID);
 
-            Log.i(TAG, "onCreate: if " + mTask.getId().toString());
+            Log.i(TAG, "onCreate: if " + mTask.getTaskUUId().toString());
         } else {
             mTask = new Task(LoginUser.userLogin);
 
-            Log.i(TAG, "onCreate: else " + mTask.getId().toString());
+            Log.i(TAG, "onCreate: else " + mTask.getTaskUUId().toString());
         }
     }
 
@@ -155,21 +155,21 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         }
         if (view.getId() == R.id.realFragDate_submitBtn) {
 
-            if (mTask.getId().equals(mTaskUUID)) {
+            if (mTask.getTaskUUId().equals(mTaskUUID)) {
                 mTaskRepository.update(mTask);
-                Log.i(TAG, "onClick: if " + mTask.getId().toString());
+                Log.i(TAG, "onClick: if " + mTask.getTaskUUId().toString());
             } else {
                 TaskRepository.getInstance(getActivity()).addTaskToList(mTask);
-                Log.i(TAG, "onClick: else " + mTask.getId().toString());
+                Log.i(TAG, "onClick: else " + mTask.getTaskUUId().toString());
             }
 
             Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-//            intent.putExtra(TASK_UUID, mTask.getId());
+//            intent.putExtra(TASK_UUID, mTask.getUserUUID());
 //            ViewPagerActivity viewPagerActivity = (ViewPagerActivity) getActivity();
 //            viewPagerActivity.
-            Log.i("view_pager", "View Pager is Called: " + mTask.getId());
+            Log.i("view_pager", "View Pager is Called: " + mTask.getTaskUUId());
             dismiss();
         }
     }
