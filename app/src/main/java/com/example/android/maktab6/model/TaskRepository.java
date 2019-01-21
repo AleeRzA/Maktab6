@@ -41,14 +41,14 @@ public class TaskRepository {
         return mUserDao.insertOrReplace(user);
     }
 
-    public void removeAllTasks() {
+    public void removeAllTasks(List<Task> taskList) {
 //        String whereClause = DBSchema.TaskTable.TaskColumns.USER_ID + " = ?";
 //        String[] whereArgs = new String[]{uuid.toString()};
 //        mDatabase.delete(DBSchema.TaskTable.NAME, null, null);
         mTaskDao.queryBuilder()
                 .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin))
                 .list()
-                .removeAll(getTasks());
+                .removeAll(taskList);
     }
 
     public List<Task> getTasks() {

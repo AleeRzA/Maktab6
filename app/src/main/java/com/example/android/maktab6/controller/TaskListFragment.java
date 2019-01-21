@@ -158,7 +158,8 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-            mRepository.removeAllTasks();
+            mRepository.removeAllTasks(mTaskLists);
+            updateUI();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -177,13 +178,6 @@ public class TaskListFragment extends Fragment {
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             setImgInside();
         }
-    }
-
-    private void removeAll() {
-        mTaskLists.clear();
-        mEmptyText.setVisibility(View.VISIBLE);
-        mEmptyImage.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
     }
 
 
