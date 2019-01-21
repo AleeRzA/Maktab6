@@ -59,60 +59,7 @@ public class Task {
         this.mDone = mDone;
     }
     @Generated(hash = 733837707)
-    public Task() {
-    }
-/**
- *
- */
-    public boolean isDone() {
-        return mDone;
-    }
 
-    public void setDone(boolean done) {
-        mDone = done;
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public Date getDate() {
-        return mDate;
-    }
-
-    public void setDate(Date date) {
-        mDate = date;
-    }
-
-    public UUID getTaskUUId() {
-        return UUID.fromString(mTaskUUId);
-    }
-
-
-    public Long getUserTableId() {
-
-        return mUserTableId;
-    }
-
-    public void setUserTableId(Long userTableId) {
-        mUserTableId = userTableId;
-    }
-
-    /**
-     *
-     */
 
     public Long get_idTableTask() {
         return this._idTableTask;

@@ -83,10 +83,10 @@ public class EditTaskFragment extends DialogFragment {
         mOkButton = view.findViewById(R.id.editFrag_btn_ok);
         mDoneChecker = view.findViewById(R.id.doneChecker_text);
 
-        mTitleText.setText(mTask.getTitle());
-        mDescriptionText.setText(mTask.getDescription());
-        mDateText.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getDate()));
-        mTimeText.setText(new SimpleDateFormat("hh:mm a").format(mTask.getDate()));
+        mTitleText.setText(mTask.getMTitle());
+        mDescriptionText.setText(mTask.getMDescription());
+        mDateText.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getMDate()));
+        mTimeText.setText(new SimpleDateFormat("hh:mm a").format(mTask.getMDate()));
         mEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +96,7 @@ public class EditTaskFragment extends DialogFragment {
                 EditTaskFragment.this.dismiss();
             }
         });
-        if(mTask.isDone()){
+        if(mTask.getMDone()){
             mDoneChecker.setText(R.string.task_isDone);
         }else {
             mDoneChecker.setText(R.string.task_notDone);

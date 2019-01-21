@@ -196,7 +196,7 @@ public class TaskListFragment extends Fragment {
         }
         public void bindSample(Task task){
             mTask = task;
-            String title = task.getTitle();
+            String title = task.getMTitle();
             mTextTitle.setText(title);
             char firstChar = title.charAt(0);
             mChar.setText(String.valueOf(firstChar));
@@ -204,7 +204,7 @@ public class TaskListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             _position = getAdapterPosition();
-            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(mTask.getTaskUUId());
+            EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(UUID.fromString(mTask.getMTaskUUId()));
             editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
             editTaskFragment.show(getFragmentManager(), SHOW_TASK);
         }

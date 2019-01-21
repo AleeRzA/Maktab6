@@ -82,11 +82,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
             mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID_EDIT);
             mTask = mTaskRepository.getTaskById(mTaskUUID);
 
-            Log.i(TAG, "onCreate: if " + mTask.getTaskUUId().toString());
+            Log.i(TAG, "onCreate: if " + mTask.getMTaskUUId());
         } else {
             mTask = new Task(LoginUser.userLogin);
 
-            Log.i(TAG, "onCreate: else " + mTask.getTaskUUId().toString());
+            Log.i(TAG, "onCreate: else " + mTask.getMTaskUUId());
         }
     }
 
@@ -106,11 +106,11 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         mDoneCheckBox = view.findViewById(R.id.checkBox_doneTask);
 
         if (mTask != null) {
-            mEditTitle.setText(mTask.getTitle());
-            mEditDescription.setText(mTask.getDescription());
-            mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getDate()));
-            mRealTime.setText(new SimpleDateFormat("hh:mm a").format(mTask.getDate()));
-            if(mTask.isDone())
+            mEditTitle.setText(mTask.getMTitle());
+            mEditDescription.setText(mTask.getMDescription());
+            mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(mTask.getMDate()));
+            mRealTime.setText(new SimpleDateFormat("hh:mm a").format(mTask.getMDate()));
+            if(mTask.getMDone())
                 mDoneCheckBox.setEnabled(false);
         }
 
@@ -123,7 +123,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         mDoneCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mTask.setDone(true);
+                mTask.setMDone(true);
             }
         });
         return view;
@@ -136,17 +136,17 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        mTask.setTitle(mEditTitle.getText().toString());
-        mTask.setDescription(mEditDescription.getText().toString());
+        mTask.setMTitle(mEditTitle.getText().toString());
+        mTask.setMDescription(mEditDescription.getText().toString());
 
 
         if (view.getId() == R.id.realFragDate_btn_edit) {
-            DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getDate());
+            DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getMDate());
             datePickerFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_DATE);
             datePickerFragment.show(getFragmentManager(), TAG_DATE_PICKER);
         }
         if (view.getId() == R.id.realFragTime_btn_edit) {
-            TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getDate());
+            TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(mTask.getMDate());
             timePickerFragment.setTargetFragment(RealEditTaskFragment.this, REQUEST_CODE_TIME);
             timePickerFragment.show(getFragmentManager(), TAG_TIME_PICKER);
         }
@@ -155,12 +155,12 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         }
         if (view.getId() == R.id.realFragDate_submitBtn) {
 
-            if (mTask.getTaskUUId().equals(mTaskUUID)) {
+            if (mTask.getMTaskUUId().equals(mTaskUUID.toString())) {
                 mTaskRepository.update(mTask);
-                Log.i(TAG, "onClick: if " + mTask.getTaskUUId().toString());
+                Log.i(TAG, "onClick: if " + mTask.getMTaskUUId());
             } else {
                 TaskRepository.getInstance(getActivity()).addTaskToList(mTask);
-                Log.i(TAG, "onClick: else " + mTask.getTaskUUId().toString());
+                Log.i(TAG, "onClick: else " + mTask.getMTaskUUId());
             }
 
             Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
@@ -169,7 +169,7 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 //            intent.putExtra(TASK_UUID, mTask.getUserUUID());
 //            ViewPagerActivity viewPagerActivity = (ViewPagerActivity) getActivity();
 //            viewPagerActivity.
-            Log.i("view_pager", "View Pager is Called: " + mTask.getTaskUUId());
+            Log.i("view_pager", "View Pager is Called: " + mTask.getMTaskUUId());
             dismiss();
         }
     }
@@ -185,12 +185,12 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
         }
         if (requestCode == REQUEST_CODE_DATE) {
             Date date = (Date) data.getSerializableExtra(DatePickerFragment.getPickedDate());
-            mTask.setDate(date);
+            mTask.setMDate(date);
             mRealDate.setText(new SimpleDateFormat("yyyy-MMM-dd").format(date));
         }
         if (requestCode == REQUEST_CODE_TIME) {
             Date date = (Date) data.getSerializableExtra(TimePickerFragment.getPickedTime());
-            mTask.setDate(date);
+            mTask.setMDate(date);
             mRealTime.setText(new SimpleDateFormat("hh:mm a").format(date));
         }
     }
