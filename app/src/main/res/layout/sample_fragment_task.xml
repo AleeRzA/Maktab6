@@ -1,40 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_sample_task"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:id="@+id/layout_sample_task">
+    android:paddingRight="8dp"
+    android:paddingLeft="8dp"
+    android:paddingTop="8dp">
 
     <TextView
+        android:gravity="center_vertical"
         android:id="@+id/sampleTask_textView"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
         android:textStyle="bold"
-        style="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:gravity="left|center_vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/share_smplFragBtn"
         app:layout_constraintEnd_toStartOf="@+id/sampleTask_circleShapeView"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/relativeImageLayout"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/creation_btn_text" />
 
     <TextView
         android:id="@+id/sampleTask_circleShapeView"
+        style="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_width="60dp"
         android:layout_height="60dp"
-
         android:background="@drawable/circle_shape"
         android:gravity="center"
         android:textColor="#ffff"
-        style="@android:style/TextAppearance.DeviceDefault.Medium"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="32dp"
         tools:text="A" />
 
+    <RelativeLayout
+        android:id="@+id/relativeImageLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/share_smplFragBtn"
+        app:layout_constraintEnd_toStartOf="@+id/sampleTask_textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/img_smplFragBtn"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginRight="8dp"
+            android:background="#DAD5D5" />
+
+        <ImageButton
+            android:id="@+id/camera_smplFragBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/share_smplFragBtn"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="SHARE"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeImageLayout" />
 
 </android.support.constraint.ConstraintLayout>
