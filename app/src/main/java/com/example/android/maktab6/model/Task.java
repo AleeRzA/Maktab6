@@ -59,7 +59,8 @@ public class Task {
         this.mDone = mDone;
     }
     @Generated(hash = 733837707)
-
+    public Task() {
+    }
 
     public Long get_idTableTask() {
         return this._idTableTask;

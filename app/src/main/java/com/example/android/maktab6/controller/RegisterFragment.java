@@ -23,7 +23,7 @@ import com.example.android.maktab6.model.User;
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
-    public static final String TAG_LOG_USER = "TAG_LOG_USER";
+    public static final String TAG_LOG_USER = "LoginFragment_TAG";
     private EditText mName;
     private EditText mEmail;
     private EditText mPassword;

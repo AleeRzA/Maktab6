@@ -73,7 +73,7 @@ public class TaskListFragment extends Fragment {
         viewChecker(mRepository, _viewId);
         if (getArguments().getSerializable(TASK_UUID) != null) {
             mTaskUUID = (UUID) getArguments().getSerializable(TASK_UUID);
-            mTask = mRepository.getTaskById(mTaskUUID);
+            mTask = mRepository.getTaskById(mTaskUUID, LoginUser.userLogin);
         } else {
             mTask = new Task(LoginUser.userLogin);
         }

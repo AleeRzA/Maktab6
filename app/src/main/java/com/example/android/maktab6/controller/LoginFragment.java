@@ -78,8 +78,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (_userName == null || _passWord == null) {
                     return;
                 }
-                if (mTaskRepository.validateUser(_userName, _passWord) > 0) {
-                    Log.i(TAG, "onClick: " + LoginUser.userLogin);
+                if (mTaskRepository.validateUser(_userName, _passWord) != null) {
+                    Log.i(TAG, "onClick: LoginFragment not Register " + LoginUser.userLogin);
                     Intent intent = ViewPagerActivity.newIntent(getActivity());
                     startActivity(intent);
                     getActivity().finish();

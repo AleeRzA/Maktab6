@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.maktab6.R;
+import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
 
@@ -60,7 +61,7 @@ public class EditTaskFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTaskUUID = (UUID) getArguments().getSerializable(TASK_ID);
-        mTask = TaskRepository.getInstance(getActivity()).getTaskById(mTaskUUID);
+        mTask = TaskRepository.getInstance(getActivity()).getTaskById(mTaskUUID, LoginUser.userLogin);
         Log.i("tas_finding", "Task: " + mTask + " Task id: " + mTaskUUID);
     }
 

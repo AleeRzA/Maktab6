@@ -47,12 +47,15 @@ public class TaskRepository {
     }
 
     public List<Task> getTasks() {
-        return mTaskDao.loadAll();
+        return mTaskDao.queryBuilder()
+                        .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin)).list();
     }
 
-    public Task getTaskById(UUID id) {
+    public Task getTaskById(UUID id, Long _id) {
         return mTaskDao.queryBuilder()
-                .where(TaskDao.Properties.MTaskUUId.eq(id.toString())).limit(1).unique();
+                        .where(TaskDao.Properties.MTaskUUId.eq(id.toString())
+                        , TaskDao.Properties.MUserTableId.eq(_id))
+                        .limit(1).unique();
     }
 
     public List<Task> getDoneTasks() {
@@ -73,7 +76,11 @@ public class TaskRepository {
         LoginUser.userLogin = mUserDao.queryBuilder().where(UserDao.Properties.MUserName.eq(username)
                                       , UserDao.Properties.MPassword.eq(password)).build()
                                       .unique().get_idTableUser();
-        return LoginUser.userLogin;
+        Log.i("wrongLogin", "userLogin: " + LoginUser.userLogin);
+        if(LoginUser.userLogin != null) {
+            return LoginUser.userLogin;
+        }
+        return null;
     }
 
     public void update(Task task) {
