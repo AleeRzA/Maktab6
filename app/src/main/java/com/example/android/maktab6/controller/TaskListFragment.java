@@ -3,10 +3,16 @@ package com.example.android.maktab6.controller;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +32,9 @@ import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.LoginUser;
 import com.example.android.maktab6.model.Task;
 import com.example.android.maktab6.model.TaskRepository;
+import com.example.android.maktab6.utils.PictureUtils;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +50,7 @@ public class TaskListFragment extends Fragment {
     private static final String SHOW_TASK = "show_task";
     private static final int REQUEST_CODE_TASK_LIST = 31;
     private static final String TASK_UUID = "task_uuid";
+    public static final int REQUEST_CODE_PHOTO = 30;
 
 
     private RecyclerView mRecyclerView;
@@ -54,6 +63,9 @@ public class TaskListFragment extends Fragment {
     private UUID mTaskUUID;
     private TaskRepository mRepository;
     private int _viewId;
+    private File mPhotoFile;
+    private ImageView mImageView;
+    private ImageButton mCameraBtn;
 
     public TaskListFragment() {
         // Required empty public constructor
@@ -81,6 +93,7 @@ public class TaskListFragment extends Fragment {
             mTask = new Task(LoginUser.userLogin);
         }
         setHasOptionsMenu(true);
+        mPhotoFile = mRepository.getPhotoFile(mTask);
     }
 
     private void viewChecker(TaskRepository repository, int viewId) {
@@ -145,7 +158,7 @@ public class TaskListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()== R.id.removeAll_btn) {
-            updateUI();
+            mRepository.removeAllTasks();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,6 +171,11 @@ public class TaskListFragment extends Fragment {
             return;
         if(requestCode == REQUEST_CODE_TASK_LIST){
             updateUI();
+        }
+        if(requestCode == REQUEST_CODE_PHOTO){
+            Uri uri = getUriFile();
+            getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            setImgInside();
         }
     }
 
@@ -188,8 +206,7 @@ public class TaskListFragment extends Fragment {
         private TextView mTextTitle;
         private TextView mChar;
         private Button mShareButton;
-        private ImageView mImageView;
-        private ImageButton mCameraBtn;
+
 
         public SampleHolder(View itemView) {
             super(itemView);
@@ -211,10 +228,15 @@ public class TaskListFragment extends Fragment {
             mShareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    composeMmsMessage();
+                    composeSmsMessage();
                 }
             });
-//            mCameraBtn.setOnClickListener(this);
+            mCameraBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cameraBtnClicked();
+                }
+            });
 
         }
         public void bindSample(Task task){
@@ -223,16 +245,15 @@ public class TaskListFragment extends Fragment {
             mTextTitle.setText(title);
             char firstChar = title.charAt(0);
             mChar.setText(String.valueOf(firstChar));
+            setImgInside();
         }
 
     }
+
     //--------------------------------------------------/
     private class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private List<Task> mTasks = new ArrayList<>();
 
-        public TaskAdapter(){
-
-        }
         public TaskAdapter(List<Task> tasks){
             mTasks = tasks;
         }
@@ -264,7 +285,8 @@ public class TaskListFragment extends Fragment {
         }
 
     }
-    public void composeMmsMessage() {
+    //-----------------------
+    private void composeSmsMessage() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, getTaskString());
@@ -272,15 +294,51 @@ public class TaskListFragment extends Fragment {
             startActivity(Intent.createChooser(intent, "OPEN WITH: "));
         }
     }
-    public String getTaskString(){
+    private String getTaskString(){
         String _title = mTask.getMTitle();
         String _desc = mTask.getMDescription();
         String _doneStat = mTask.getMDone() ? "is done" : "is not done";
         String _date = new SimpleDateFormat("yyyy.MM.dd").format(mTask.getMDate());
         String _time = new SimpleDateFormat("hh:mm a").format(mTask.getMDate());
         String finalString = "Title: " + _title + "\nDescription: " + _desc
-                + ". The task " + _doneStat + "; it was created on " + _date + " at " + _time + ".";
+                + ".\n The task " + _doneStat + "; it was created on " + _date + " at " + _time + ".";
         return finalString;
+    }
+    private void cameraBtnClicked(){
+        Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        Uri uri = getUriFile();
+        captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<ResolveInfo> activities = packageManager.queryIntentActivities(
+                captureIntent,
+                PackageManager.MATCH_DEFAULT_ONLY);
+
+        for (ResolveInfo activity : activities) {
+            getActivity().grantUriPermission(
+                    activity.activityInfo.packageName,
+                    uri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+
+        startActivityForResult(captureIntent, REQUEST_CODE_PHOTO);
+    }
+
+    private Uri getUriFile() {
+        return FileProvider.getUriForFile(getActivity(),
+                "com.example.android.maktab6.fileprovider",
+                mPhotoFile);
+    }
+    private void setImgInside() {
+        if(mPhotoFile == null || !mPhotoFile.exists()){
+            mImageView.setImageDrawable(null);
+        } else {
+            Bitmap bitmap =
+                    PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
+            mImageView.setImageBitmap(bitmap);
+            mCameraBtn.setVisibility(View.GONE);
+        }
     }
 }
 

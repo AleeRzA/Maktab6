@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.android.maktab6.greendao.App;
 
+import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,10 +41,14 @@ public class TaskRepository {
         return mUserDao.insertOrReplace(user);
     }
 
-    public void removeAllTasks(UUID uuid) {
+    public void removeAllTasks() {
 //        String whereClause = DBSchema.TaskTable.TaskColumns.USER_ID + " = ?";
 //        String[] whereArgs = new String[]{uuid.toString()};
 //        mDatabase.delete(DBSchema.TaskTable.NAME, null, null);
+        mTaskDao.queryBuilder()
+                .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin))
+                .list()
+                .removeAll(getTasks());
     }
 
     public List<Task> getTasks() {
@@ -88,6 +93,11 @@ public class TaskRepository {
         mTaskDao.queryBuilder()
                 .where(TaskDao.Properties.MTaskUUId.eq(task.getMTaskUUId())).limit(1).unique()
         );
+    }
+    public File getPhotoFile(Task task){
+        File file = mContext.getFilesDir();
+        File photoFile = new File(file, task.getPhotoName());
+        return photoFile;
     }
 
 }

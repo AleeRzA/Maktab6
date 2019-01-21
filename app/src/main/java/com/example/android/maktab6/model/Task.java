@@ -164,6 +164,9 @@ public class Task {
         }
         myDao.update(this);
     }
+    public String getPhotoName(){
+        return "img_" + mTaskUUId + ".jpg";
+    }
     /** called by internal mechanisms, do not call yourself. */
     @Generated(hash = 1442741304)
     public void __setDaoSession(DaoSession daoSession) {
