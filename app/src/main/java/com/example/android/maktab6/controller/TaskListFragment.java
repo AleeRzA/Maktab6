@@ -16,7 +16,6 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +35,6 @@ import com.example.android.maktab6.utils.PictureUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -98,19 +96,17 @@ public class TaskListFragment extends Fragment {
         mPhotoFile = mRepository.getPhotoFile(mTask);
     }
 
-    private void viewChecker(TaskRepository repository, int viewId) {
+    private List<Task> viewChecker(TaskRepository repository, int viewId) {
         if(viewId == 0){
-            mTaskLists = repository.getTasks();
-            Log.i("mTaskList", "task list position zero: " + viewId + " -- " +mTaskLists.size());
+            return mTaskLists = repository.getTasks();
         }
         if (viewId == 1){
-            mTaskLists = repository.getDoneTasks();
-            Log.i("mTaskList", "task list position one: " + viewId + " -- " +mTaskLists.size());
+            return mTaskLists = repository.getDoneTasks();
         }
         if (viewId == 2){
-            mTaskLists = repository.getUndoneTasks();
-            Log.i("mTaskList", "task list position two: " + viewId + " -- " +mTaskLists.size());
+            return mTaskLists = repository.getUndoneTasks();
         }
+        return null;
     }
 
     @Override
@@ -161,7 +157,6 @@ public class TaskListFragment extends Fragment {
         }
         if(item.getItemId() == R.id.searchTask_btn){
             SearchFragment searchFragment = SearchFragment.newInstance();
-            searchFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_SEARCh);
             searchFragment.show(getFragmentManager(), SEARCH_TASK);
             return true;
         }
@@ -181,22 +176,11 @@ public class TaskListFragment extends Fragment {
             getActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             setImgInside();
         }
-        if(requestCode == REQUEST_CODE_SEARCh){
-            String title = data.getStringExtra(SearchFragment.getSearchTitle());
-            String desc = data.getStringExtra(SearchFragment.getSearchDesc());
-            List<Task> taskList = mRepository.searchQuery(title, desc);
-            if(!taskList.isEmpty()){
-                mTaskLists = taskList;
-                Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        }
     }
 
 
-    private void updateUI() {
-
+    public void updateUI() {
+        mTaskLists = viewChecker(mRepository, _viewId);
         if (mRecyclerView != null) {
             if (mTaskAdapter == null) {
                 mTaskAdapter = new TaskAdapter(mTaskLists);
@@ -228,7 +212,8 @@ public class TaskListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     _position = getAdapterPosition();
-                    EditTaskFragment editTaskFragment = EditTaskFragment.newInstance(UUID.fromString(mTask.getMTaskUUId()));
+                    EditTaskFragment editTaskFragment =
+                            EditTaskFragment.newInstance(UUID.fromString(mTask.getMTaskUUId()));
                     editTaskFragment.setTargetFragment(TaskListFragment.this, REQUEST_CODE_TASK_LIST);
                     editTaskFragment.show(getFragmentManager(), SHOW_TASK);
                 }
@@ -260,7 +245,7 @@ public class TaskListFragment extends Fragment {
 
     //--------------------------------------------------/
     private class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-        private List<Task> mTasks = new ArrayList<>();
+        private List<Task> mTasks;
 
         public TaskAdapter(List<Task> tasks){
             mTasks = tasks;
@@ -295,6 +280,7 @@ public class TaskListFragment extends Fragment {
     }
     //-----------------------
     private void composeSmsMessage() {
+
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, getTaskString());

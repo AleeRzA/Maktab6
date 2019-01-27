@@ -38,19 +38,16 @@ public class TaskRepository {
 
     public long addNewUser(User user) {
         Log.i(TAG_LOG_USER, "user added...");
-        if(mUserDao.hasKey(user))
-            return user.get_idTableUser();
+//        if(mUserDao.hasKey(user))
+//            return user.get_idTableUser();
         return mUserDao.insertOrReplace(user);
     }
 
     public void removeAllTasks(List<Task> taskList) {
-//        String whereClause = DBSchema.TaskTable.TaskColumns.USER_ID + " = ?";
-//        String[] whereArgs = new String[]{uuid.toString()};
-//        mDatabase.delete(DBSchema.TaskTable.NAME, null, null);
-        mTaskDao.queryBuilder()
-                .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin))
-                .list()
-                .removeAll(taskList);
+        mTaskDao.deleteInTx(taskList);
+//        mTaskDao.queryBuilder()
+//                .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin))
+//                .list();
     }
 
     public List<Task> getTasks() {
@@ -68,14 +65,14 @@ public class TaskRepository {
     public List<Task> getDoneTasks() {
          List<Task> _doneList = mTaskDao.queryBuilder()
                                    .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin)
-                                   , TaskDao.Properties.MDone.eq(true)).build().list();
+                                   , TaskDao.Properties.MDone.eq(true)).list();
         return _doneList;
     }
 
     public List<Task> getUndoneTasks() {
         List<Task> _undoneList = mTaskDao.queryBuilder()
                 .where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin)
-                        , TaskDao.Properties.MDone.eq(false)).build().list();
+                        , TaskDao.Properties.MDone.eq(false)).list();
         return _undoneList;
     }
 
@@ -91,19 +88,15 @@ public class TaskRepository {
     }
 
     public void update(Task task) {
-        mTaskDao.update(
-        mTaskDao.queryBuilder()
-                .where(TaskDao.Properties.MTaskUUId.eq(task.getMTaskUUId())).limit(1).unique()
-        );
+        mTaskDao.update(task);
     }
 
     public List<Task> searchQuery(String title, String desc){
         QueryBuilder<Task> queryBuilder = mTaskDao.queryBuilder();
               queryBuilder.where(TaskDao.Properties.MUserTableId.eq(LoginUser.userLogin),
-              queryBuilder.or(TaskDao.Properties.MTitle.like(title)
-                      , TaskDao.Properties.MDescription.like(desc)));
-        List<Task> taskList = queryBuilder.list();
-        return taskList;
+              TaskDao.Properties.MTitle.like(title)
+                      , TaskDao.Properties.MDescription.like(desc));
+        return queryBuilder.list();
     }
 
     public File getPhotoFile(Task task){

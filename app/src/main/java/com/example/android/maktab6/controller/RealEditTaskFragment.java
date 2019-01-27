@@ -2,6 +2,7 @@ package com.example.android.maktab6.controller;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +33,9 @@ import java.util.UUID;
  */
 public class RealEditTaskFragment extends DialogFragment implements View.OnClickListener {
 
+    public interface Callback{
+        void onTriggered();
+    }
     public static final String TAG = "RealEditTaskFragment_TAG";
 
     private static final String TASK_ID_EDIT = "com.example.android.maktab6.controller.task_id_edit";
@@ -39,10 +43,9 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     private static final int REQUEST_CODE_TIME = 11;
     private static final String TAG_DATE_PICKER = "date_datePicker";
     private static final String TAG_TIME_PICKER = "time_timePicker";
-
-
-
     private static final String TASK_UUID = "task_uuid";
+
+    private Callback mCallback;
 
     private EditText mEditTitle;
     private EditText mEditDescription;
@@ -135,6 +138,19 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof Callback)
+            mCallback = (Callback) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
+
+    @Override
     public void onClick(View view) {
         mTask.setMTitle(mEditTitle.getText().toString());
         mTask.setMDescription(mEditDescription.getText().toString());
@@ -157,19 +173,18 @@ public class RealEditTaskFragment extends DialogFragment implements View.OnClick
 
             if (UUID.fromString(mTask.getMTaskUUId()).equals(mTaskUUID)) {
                 mTaskRepository.update(mTask);
-                Log.i(TAG, "onClick: if " + mTask.getMTaskUUId());
             } else {
                 TaskRepository.getInstance(getActivity()).addTaskToList(mTask);
-                Log.i(TAG, "onClick: else " + mTask.getMTaskUUId());
             }
 
-            Intent intent = new Intent(getActivity(), ViewPagerActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-//            intent.putExtra(TASK_UUID, mTask.getUserUUID());
-//            ViewPagerActivity viewPagerActivity = (ViewPagerActivity) getActivity();
-//            viewPagerActivity.
-            Log.i("view_pager", "View Pager is Called: " + mTask.getMTaskUUId());
+            mCallback.onTriggered();
+//            List<Fragment> fragments = getActivity().getSupportFragmentManager().getFragments();
+//            for (Fragment fragment : fragments) {
+//                if (fragment instanceof TaskListFragment) {
+//                    TaskListFragment taskListFragment = (TaskListFragment) fragment;
+//                    taskListFragment.updateUI();
+//                }
+//            }
             dismiss();
         }
     }

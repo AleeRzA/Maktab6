@@ -17,9 +17,10 @@ import android.view.View;
 import com.example.android.maktab6.R;
 import com.example.android.maktab6.model.LoginUser;
 
+import java.util.List;
 import java.util.UUID;
 
-public class ViewPagerActivity extends AppCompatActivity {
+public class ViewPagerActivity extends AppCompatActivity implements RealEditTaskFragment.Callback{
 
     public static final String TAG = "ViewPagerActivity_TAG";
     public static final String REAL_TASK_CREATION = "realTaskCreation";
@@ -109,5 +110,16 @@ public class ViewPagerActivity extends AppCompatActivity {
             mTaskUUID = (UUID) data.getSerializableExtra(RealEditTaskFragment.getTaskUuid());
             Log.i("view_pager", "Check task Id: " + mTaskUUID);
         }
+    }
+
+    @Override
+    public void onTriggered() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+            for (Fragment fragment : fragments) {
+                if (fragment instanceof TaskListFragment) {
+                    TaskListFragment taskListFragment = (TaskListFragment) fragment;
+                    taskListFragment.updateUI();
+                }
+            }
     }
 }
